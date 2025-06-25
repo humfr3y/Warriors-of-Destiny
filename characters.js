@@ -1187,10 +1187,6 @@ window.ascendCharacter = function(fromName, toName) {
 
     const fromNameTranslated = i18next.t(fromNameKey, { defaultValue: fromName });
     const toNameTranslated = i18next.t(toNameKey, { defaultValue: toName });
-
-    console.log(fromName)
-    console.log(toName)
-    console.log(ASCENSIONS[fromNameKey])
     const ascRecipe = ASCENSIONS[fromName][toName];
 
     // Находим персонажа для возвышения

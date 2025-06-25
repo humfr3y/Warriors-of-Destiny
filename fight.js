@@ -1945,9 +1945,7 @@ function checkBattleEnd() {
             expPlayerMessages = [];
             giveExpToMaterializedAllies();
             const rewardConfig = getLevelRewards(currentLevel);
-            console.log(rewardConfig)
             const rewards = generateDrop(rewardConfig);
-            console.log(rewards)
             const completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
             if (currentLevel % 10 == 0 && !completedLevels.includes(currentLevel)) {
                 rewards.push({ name: "Human Vessel", key: "human_vessel", rarity: "Epic", quantity: 1 })
