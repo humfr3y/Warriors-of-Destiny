@@ -821,6 +821,7 @@ window.addEventListener('load', function() {
         clearSelectedCharacters();
         renderCraftingList();
         loadSavedSquad();
+        loadInventory();
         updateCharactersList();
         renderMaterializedCharacters();
         renderAscensionCharactersList()
