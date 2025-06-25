@@ -1786,6 +1786,8 @@ function showRewardsModal(rewards) {
         }
     });
     localStorage.setItem('inventory', JSON.stringify(inventory));
+    const characterInfoPanel = document.getElementById('character-info-panel');
+    characterInfoPanel.style.display = 'none';
 }
 
 // --- Опыт и уровни ---
