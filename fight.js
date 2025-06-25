@@ -634,13 +634,14 @@ function enemyAttack(attackerId) {
 
     // Особое поведение для Saint (хилит союзника)
     if (attacker.code === "Saint") {
-        // Находит самого раненого союзника и лечит его
-        const allies = fighters.filter(c => c !== attacker && c.health > 0 && c.damagetype !== "Damage" && c.damagetype !== "Area Damage");
+        // Лечит только других врагов (свою команду)
+        const team = selectedEnemies;
+        const allies = team.filter(c => c !== attacker && c.health > 0);
         if (allies.length > 0) {
             const minHealth = Math.min(...allies.map(a => a.health / a.maxHealth));
             const wounded = allies.filter(a => (a.health / a.maxHealth) === minHealth);
             const target = wounded[Math.floor(Math.random() * wounded.length)];
-            healAlly(attacker, target);
+            healEnemy(attacker, target);
         }
         playAttackSound(attacker.sound);
         updateDamageDisplay();
