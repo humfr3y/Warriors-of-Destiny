@@ -139,7 +139,7 @@
     "reset_confirm_prompt": "To reset the game, enter CONFIRM",
     "reset_success": "Game reset! The page will be reloaded.",
     "reset_cancel": "Reset cancelled.",
-    "version_0_1_title": "v0.1.3.0 Alpha",
+    "version_0_1_title": "v0.1.3.1 Alpha",
     "version_0_1_changelog": "ATTENTION! TEST VERSION! <br> Warriors of Destiny is a new game by me (Humfrey or Hyper) in the style of a turn-based strategy. You must unlock new heroes, collect resources, and ascend them up to legendary rarity. The rest of the text and lore will be added in future alpha versions. <br> Thank you to everyone who is testing the game and finding bugs! <br> <b>NEW FEATURES:</b> <br> - 100 LEVELS IN THE CAMPAIGN! Fight in various medieval locations and meet all kinds of heroes, from peasants to knights. <br> - ITEM CRAFTING SYSTEM AND CHARACTER CREATION! As soon as you get your first resources and a Human Vessel, you can create a new character and develop them through battles and ascension. <br> - ASCENSIONS! Ascend a character to the highest rarity and gain new abilities and enhancements. <br><br> Planned for future alpha versions: <br> +100 more campaign levels (still medieval) <br> New characters are already planned. <br> New rarity <br> Game lore and a \"How to Play\" tab. <br> Advanced UI and a more beautiful design. <br> Superabilities. <br> And much more... ",
 
   "levelName": [

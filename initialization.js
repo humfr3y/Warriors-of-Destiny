@@ -1514,27 +1514,27 @@ const itemCraftingRecipes = {
         { name: "Universal Alloy", rarity: "Mythic", quantity: 1 }
     ],
     "Bow": [
-        { name: "Wood", rarity: "Common", quantity: 5 },
-        { name: "Rope", rarity: "Common", quantity: 3 }
+        { name: "Wood", rarity: "Common", quantity: 3 },
+        { name: "Rope", rarity: "Common", quantity: 2 }
     ],
     "Pitchfork": [
-        { name: "Wood", rarity: "Common", quantity: 5 },
+        { name: "Wood", rarity: "Common", quantity: 3 },
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 1 }
     ],
     "Spear": [
-        { name: "Wood", rarity: "Common", quantity: 10 },
+        { name: "Wood", rarity: "Common", quantity: 5 },
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 1 }
     ],
     "Axe": [
-        { name: "Wood", rarity: "Common", quantity: 6 },
+        { name: "Wood", rarity: "Common", quantity: 4 },
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 2 }
     ],
     "Sword": [
-        { name: "Wood", rarity: "Common", quantity: 3 },
+        { name: "Wood", rarity: "Common", quantity: 2 },
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 3 }
     ],
     "Shield": [
-        { name: "Wood", rarity: "Common", quantity: 16 },
+        { name: "Wood", rarity: "Common", quantity: 12 },
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 5 }
     ],
     "Light Armor": [
@@ -1568,7 +1568,7 @@ const itemCraftingRecipes = {
         { name: "Infected Blood", rarity: "Rare", quantity: 10 }
     ],
     "Elite Guard Spear": [
-        { name: "Wood", rarity: "Common", quantity: 20 },
+        { name: "Wood", rarity: "Common", quantity: 15 },
         { name: "Titanium Ingot", rarity: "Rare", quantity: 5 },
         { name: "Battle Medals", rarity: "Epic", quantity: 3 }
     ],
@@ -1586,12 +1586,12 @@ const itemCraftingRecipes = {
     ],
     "Mace": [
         { name: "Titanium Ingot", rarity: "Rare", quantity: 2 },
-        { name: "Wood", rarity: "Common", quantity: 5 }
+        { name: "Wood", rarity: "Common", quantity: 4 }
     ],
     "Steel Blade": [
         { name: "Steel Ingot", rarity: "Rare", quantity: 2 },
         { name: "Piece of Leather", rarity: "Uncommon", quantity: 2 },
-        { name: "Wood", rarity: "Common", quantity: 5 }
+        { name: "Wood", rarity: "Common", quantity: 3 }
     ],
     "Blade": [
         { name: "Iron Ingot", rarity: "Uncommon", quantity: 1 },
@@ -1626,7 +1626,7 @@ const itemCraftingRecipes = {
         { name: "Curse", rarity: "Mythic", quantity: 1 }
     ],
     "Staff": [
-        { name: "Wood", rarity: "Common", quantity: 10 }
+        { name: "Wood", rarity: "Common", quantity: 5 }
     ],
     "Mage's Staff": [
         { name: "Staff", rarity: "Uncommon", quantity: 1 },
