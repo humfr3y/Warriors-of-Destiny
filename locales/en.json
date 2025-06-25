@@ -1,0 +1,741 @@
+{           
+    "Settings": "Settings",
+    "Save": "Save",
+    "Load": "Load",
+    "Import": "Import",
+    "Export": "Export",
+    "Reset Game": "Reset Game",
+    "Confirm Reset": "Type CONFIRM to reset the game",
+    "Game Reset Success": "Game reset! The page will reload.",
+    "Reset Cancelled": "Reset cancelled.",
+    "Characters": "Characters",
+    "Inventory": "Inventory",
+    "Ascension": "Ascension",
+    "Campaign": "Campaign",
+    "Your Squad": "Your Squad",
+    "Clear Squad": "Clear Squad",
+    "Random Battle": "Random Battle",
+    "Victory": "Victory!",
+    "Defeat": "Defeat!",
+    "Try Again": "Try Again",
+    "To Characters": "To Characters",
+    "Level": "Level",
+    "Experience": "Experience",
+    "Rarity": "Rarity",
+    "Health": "Health",
+    "Defense": "Defense",
+    "Damage": "Damage",
+    "Speed": "Speed",
+    "Ability": "Ability",
+    "DamageType": "Damage type",
+    "Sort by": "Sort by:",
+    "Sort by Rarity": "Rarity",
+    "Sort by Level": "Level",
+    "Sort by Name": "Name",
+    "Sort by Speed": "Speed",
+    "Front": "Front row",
+    "Back": "Back row",
+    "Save successful": "Save successful",
+    "Load successful": "Load successful",
+    "Import successful": "Import successful!",
+    "Import error": "Import error!",
+    "Export successful": "Export successful!",
+    "Version": "Version",
+    "Alpha Version": "Alpha Version",
+    "First Alpha Version": "Click at version.",
+    "Switch to English": "Switch to English",
+    "Switch to Russian": "Switch to Russian",
+    "Empty": "Empty",
+    "Saved Squad": "Saved squad: ",
+
+    "Music Volume": "Music Volume",
+    "Sound Volume": "SFX Volume",
+
+    "Heal": "Heal",
+    "Shield": "Shield",
+    "CurseDmg": "Damage Curse",
+    "CurseDef": "Defense Curse",
+    "Resurrection": "Resurrected!",
+
+    "HealthShort": "HP",
+    "DefenseShort": "DEF",
+    "DamageShort": "АТК",
+    "HealShort": "Heal",
+    "ShieldShort": "DEF bless",
+    "CurseDmgShort": "АТК curse",
+    "CurseDefShort": "DEF curse",
+
+    "You received the following rewards": "You received the following rewards:",
+    "Experience and levels": "Experience and levels:",
+
+    "You defeated all enemies!": "You defeated all enemies!",
+    "All your allies have fallen in battle.": "All your allies have fallen in battle.",
+
+    "Special formula": "Special formula",
+    "Level up message": "{{name}}: +{{exp}} exp, level up to {{level}} (+{{ups}})!",
+    "Exp gain message": "{{name}}: +{{exp}} exp",
+    "Player level up": "Player level up to {{level}} (+{{ups}})!",
+    "Player exp gain": "Player: +{{exp}} exp",
+    "First time bonus": "First time level clear bonus: +10 exp",
+
+    "Ascend to": "Ascend to",
+    "required": "required:",
+    "Required level": "Required level",
+    "Ascend": "Ascend",
+    "Drag character here": "Drag character here",
+
+    "Common": "Common",
+    "Uncommon": "Uncommon",
+    "Rare": "Rare",
+    "Superrare": "Superrare",
+    "Epic": "Epic",
+    "Mythic": "Mythic",
+    "Legendary": "Legendary",
+    "Special": "Special",
+
+    "Are you sure?": "Are you sure?",
+    "Yes": "Yes",
+    "No": "No",
+    "OK": "OK",
+    "Cancel": "Cancel",
+
+    "Field": "Field and forest",
+    "Village": "Village",
+    "Bandit Lair": "Bandit Lair",
+    "Town": "Small town",
+    "City": "Nobleman city",
+
+    "BattleStarted": "Battle Started!",
+    "Exit": "Exit",
+    "BattleResultTitle": "Battle Result",
+    "TryAgain": "Try Again",
+    "ToCharacters": "To Characters",
+
+    "Not enough resources": "Not enough resources",
+    "Breed": "Create",
+    "Craft": "Craft",
+    "Recipe": "Recipe",
+    "Breeding": "Creation",
+    "Craft Heroes": "Character creation",
+    "Craft Items": "Craft items",
+    "crafted": "is created and waiting for your orders!",
+
+    "Ascension Characters": "Ascension Characters",
+    "Ascension Panel": "Ascension Panel",
+    "Ascension Success": "Ascension Success!",
+
+    "Crafting Success": "Crafting Success!",
+
+     "ascension_message": "Character \"{{from}}\" ascended to \"{{to}}\"!",
+
+    "level_reward_1": "Craft items and characters creation",
+    "level_reward_2": "Ascension of characters",
+    "level_reward_3": "Random battle",
+    "level_reward_4": "Soon...",
+    "level_reward_5": "Soon...",
+    "Level Rewards": "Level rewards",
+    "Required Level": "Required level: ",
+
+    "reset_confirm_prompt": "To reset the game, enter CONFIRM",
+    "reset_success": "Game reset! The page will be reloaded.",
+    "reset_cancel": "Reset cancelled.",
+    "version_0_1_title": "v0.1 Alpha",
+    "version_0_1_changelog": "ATTENTION! TEST VERSION! <br> Warriors of Destiny is a new game by me (Humfrey or Hyper) in the style of a turn-based strategy. You must unlock new heroes, collect resources, and ascend them up to legendary rarity. The rest of the text and lore will be added in future alpha versions. <br> Thank you to everyone who is testing the game and finding bugs! <br> <b>NEW FEATURES:</b> <br> - 100 LEVELS IN THE CAMPAIGN! Fight in various medieval locations and meet all kinds of heroes, from peasants to knights. <br> - ITEM CRAFTING SYSTEM AND CHARACTER CREATION! As soon as you get your first resources and a Human Vessel, you can create a new character and develop them through battles and ascension. <br> - ASCENSIONS! Ascend a character to the highest rarity and gain new abilities and enhancements. <br><br> Planned for future alpha versions: <br> +100 more campaign levels (still medieval) <br> New characters are already planned. <br> New rarity <br> Game lore and a \"How to Play\" tab. <br> Advanced UI and a more beautiful design. <br> Superabilities. <br> And much more... ",
+
+  "levelName": [
+    "Tutorial", "There Are Two", "A Warrior Alone", "A Hunter Alone", "Small Army", "Advanced Small Army", "Now There Are Three", "They Went Hunting", "Military Hunt", "Crossbowmen",
+    "Two Hunter Brothers", "Warrior and Crossbowman", "Small Guard", "Forest Adventures 1", "Forest Adventures 2", "On Duty", "Duo 1", "Duo 2", "Duo 3", "Great Mage Ulrik",
+    "Pilgrims and Warriors", "Crossbowmen and Warriors", "Holy Archer and Warrior", "Horde", "Warrior Horde", "Moral Support", "Holy Men", "Magic and Sword", "Forest Adventures 3", "True Knights",
+    "Holy Power", "Holiness Under Protection", "Five Peasants Went Hunting", "Under Strong Protection", "Three Times More Defense!", "Blessed Defenders", "RPG Skirmish", "Magic Infantrymen", "Almost Three Musketeers", "Village Guard",
+    "Forest Ambush", "Second Ambush", "Bandit Squad", "Gate of the Lair", "Main Gate Guard", "Holy Marauders", "Heist of the Century", "Stealth Above All", "Marauder and Three Holy Brothers", "Leader of One of the Gangs",
+    "Switched Sides", "Magic Gang", "Holy Gang", "Herald's Gang", "Herald's Gang 2", "Hunter Gang", "Beggar Gang", "There Were Five of Them", "Bandit Hunt", "Herald",
+    "On the Way to the City", "Forest Guard", "Gate Guard I", "Gate Guard II", "Three Musketeers", "Ranged Commotion", "RPG Squad", "On Duty", "Traitor Hunters", "Vincent's Squad",
+    "Cavalry Infantry", "Ranged Armada", "Peasants and Hunters", "Knightly Guard", "Royal Musketeer", "Night Watch", "Holy Mages and Knights", "Armed Forces", "Yin and Yang", "Baron Ludwig's Guard",
+    "Divine Swordsmen", "Garrison Guard", "Mounted Spear Masters", "Mounted Guard", "There's Powder in the Flasks", "Five Cannoneers", "Under the Squires' Protection", "Holy Cannon", "Immortal?", "Squad of Cavalier Ludovic III",
+    "Bombard is My Pride", "Skull Crushers", "Noblemen's Army", "Royal Guard", "Impenetrable", "Cannon Festival", "Bombardier Under Protection", "Elite Cavalry Squad", "Magic Barrier", "Oh, Lucian the Lightbringer, hero who brings light into utter darkness!"
+  ],
+  "Speedy": {
+    "name": "Speedy",
+    "damagetype": "Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": ""
+  },
+  "Slowy": {
+    "name": "Slowy",
+    "damagetype": "Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": ""
+  },
+  "Peasant": {
+    "name": "Peasant",
+    "damagetype": "Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": "A peasant is a person who has worked all his life on the land of noble feudal lords. The only thing he knows is how to swing a pitchfork."
+  },
+  "Lightning": {
+    "name": "Lightning bearer",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Attacks twice.",
+    "description": ""
+  },
+  "Berserker": {
+    "name": "Berserker",
+    "damagetype": "Damage",
+    "rarity": "Mythic",
+    "ability": "Increases damage as health decreases.",
+    "description": "Berserker is the embodiment of rage and madness. They say he has seen many horrors before falling into bloody despair."
+  },
+  "Hero": {
+    "name": "Hero",
+    "damagetype": "Damage",
+    "rarity": "Legendary",
+    "ability": "After attacking, increases own damage by 5 and defense by 2%.",
+    "description": "\"Oh, glorious hero, light in the darkness! May your sword protect us from evil, and your name be sung in songs through the ages.\""
+  },
+  "Brute": {
+    "name": "Brute",
+    "damagetype": "Damage",
+    "rarity": "Superrare",
+    "ability": "Static damage.",
+    "description": ""
+  },
+  "Mage": {
+    "name": "Mage",
+    "damagetype": "Magic Damage",
+    "rarity": "Rare",
+    "ability": "Attacks ignore enemy defense.",
+    "description": "A graduate of the magic academy, has good skills in using magic through enemy defense."
+  },
+  "Archer": {
+    "name": "Archer",
+    "damagetype": "Ranged Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": "A master of ranged combat, trained to shoot a bow and defend his village from bandits."
+  },
+  "Warrior": {
+    "name": "Warrior",
+    "damagetype": "Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": "The guardian of his village, together with archers, is able to unhesitatingly plunge his blade into the enemy's heart."
+  },
+  "Killer": {
+    "name": "Killer",
+    "damagetype": "Damage",
+    "rarity": "Epic",
+    "ability": "Static damage.",
+    "description": "A master of his craft, born to inflict pain even on the most harmless creatures. His heart knows neither fear nor regret."
+  },
+  "Tank": {
+    "name": "Tank",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Static damage.",
+    "description": ""
+  },
+  "Cavalier": {
+    "name": "Cavalier",
+    "damagetype": "Damage",
+    "rarity": "Mythic",
+    "ability": "Increases damage by 5 after attacking and attacks first at the start of battle .",
+    "description": "A master of horseback riding and elegant combat on horseback. His spear and horse are all he needs to protect order in the capital."
+  },
+  "Infantry": {
+    "name": "Infantry",
+    "damagetype": "Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": "An ordinary soldier who fights on the front line. His spear is his faithful companion in battle."
+  },
+  "Cannoneer": {
+    "name": "Cannoneer",
+    "damagetype": "Area Damage",
+    "rarity": "Epic",
+    "ability": "Can deal heavy damage to 3 targets at once.",
+    "description": "A master of artillery, who with a heavy portable cannon deals devastating damage to enemies. His cannon is his pride and strength."
+  },
+  "Hexadrone": {
+    "name": "Hexadrone",
+    "damagetype": "Area Damage",
+    "rarity": "Superrare",
+    "ability": "Hexadrone can deal damage to 3 targets at once.",
+    "description": ""
+  },
+  "SkeletonKing": {
+    "name": "Skeleton King",
+    "damagetype": "Damage",
+    "rarity": "Mythic",
+    "ability": "Deals damage equal to 15% of its health and ressurects 1 time after death with 40% from max health.",
+    "description": ""
+  },
+  "ShieldBearer": {
+    "name": "Shieldbearer",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Absorbs 50% of enemy damage.",
+    "description": "The shieldbearer is fully equipped with armor and shields to protect his allies from any blows and projectiles."
+  },
+  "SkeletonKnight": {
+    "name": "Skeleton Knight",
+    "damagetype": "Damage",
+    "rarity": "Uncommon",
+    "ability": "Absorbs 35% of enemy damage.",
+    "description": ""
+  },
+  "IronSkeleton": {
+    "name": "Iron Skeleton",
+    "damagetype": "Damage",
+    "rarity": "Epic",
+    "ability": "Absorbs 90% of enemy damage.",
+    "description": ""
+  },
+  "Jester": {
+    "name": "Jester",
+    "damagetype": "Ranged Damage",
+    "rarity": "Epic",
+    "ability": "Deals from 10 to 30 damage.",
+    "description": ""
+  },
+  "Zombiehunter": {
+    "name": "Zombie Hunter",
+    "damagetype": "Damage",
+    "rarity": "Superrare",
+    "ability": "Restores 20 health after attacking.",
+    "description": ""
+  },
+  "Flag": {
+    "name": "Flagbearer",
+    "damagetype": "Damage",
+    "rarity": "Legendary",
+    "ability": "When attacking, increases all allies' attack by 5 and defense by 2%.",
+    "description": "Flagbearer is a symbol of hope and courage on the battlefield. His flag inspires allies and instills fear in the hearts of enemies."
+  },
+  "Healer": {
+    "name": "Battle Healer",
+    "damagetype": "Damage",
+    "rarity": "Mythic",
+    "ability": "Restores 10 health to all allies at front row on when attacking.",
+    "description": "A battle healer uses his healing skills right on the front line during battles, thanks to this he learned how to both attack and heal if necessary."
+  },
+  "Paladin": {
+    "name": "Paladin",
+    "damagetype": "Damage",
+    "rarity": "Legendary",
+    "ability": "After attacking, increases all allies' defense by 4%.",
+    "description": "A legendary defender who can shield his allies on the battlefield thanks to his pure heart and the power of light."
+  },
+  "Voidemperor": {
+    "name": "Void Emperor",
+    "damagetype": "Magic Damage",
+    "rarity": "Legendary",
+    "ability": "Deals damage to all enemies on the battlefield and ignores enemy defense.",
+    "description": ""
+  },
+  "Saint": {
+    "name": "Saint",
+    "damagetype": "Heal",
+    "rarity": "Superrare",
+    "ability": "Heals an ally and does not attack.",
+    "description": "Seeing how much his allies suffer, the priest could not stand aside and decided to use the power of the Lord on the battlefield to heal them."
+  },
+  "Cursedsaint": {
+    "name": "Cursed Saint",
+    "damagetype": "Curse of Damage",
+    "rarity": "Superrare",
+    "ability": "Reduces the target's damage.",
+    "description": "A priest whose heart has blackened, rejected the Lord and accepted the powers of the devil, instead of healing he prefers to weaken his enemies."
+  },
+  "Fallensaint": {
+    "name": "Fallen Saint",
+    "damagetype": "Curse of Defense",
+    "rarity": "Mythic",
+    "ability": "Reduces the target's defense.",
+    "description": "A cursed priest who devoted his whole life to serving the devil. He cares about nothing but eternal youth and the suffering of others."
+  },
+  "Hunter": {
+    "name": "Hunter",
+    "damagetype": "Ranged Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": "A villager who taught himself to shoot a bow and hunt animals for food. However, his archery skills also came in handy in battle."
+  },
+  "Woodcutter": {
+    "name": "Woodcutter",
+    "damagetype": "Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": "A rather mature man, excellent with an axe, after a skirmish with bandits in the forest he realized that his skills could also be useful in battle."
+  },
+  "Tetradrone": {
+    "name": "Tetradrone",
+    "damagetype": "Area Damage",
+    "rarity": "Rare",
+    "ability": "Tetradrone can deal damage to 3 targets.",
+    "description": ""
+  },
+  "Superdrone": {
+    "name": "Superdrone",
+    "damagetype": "Area Damage",
+    "rarity": "Epic",
+    "ability": "Superdrone can deal damage to 5 targets.",
+    "description": ""
+  },
+  "Ultradrone": {
+    "name": "Ultradrone",
+    "damagetype": "Ranged Damage",
+    "rarity": "Mythic",
+    "ability": "Ultradrone can deal damage to all targets.",
+    "description": ""
+  },
+  "Godlikesaint": {
+    "name": "Godlike Saint",
+    "damagetype": "Protection",
+    "rarity": "Mythic",
+    "ability": "Applies defense to an ally.",
+    "description": "A priest who devoted his whole life to serving the Lord, was finally granted His personal blessing, since then he can guide his allies on the true path and bestow divine protection upon them."
+  },
+  "Bloodknight": {
+    "name": "Blood Knight",
+    "damagetype": "Damage",
+    "rarity": "Superrare",
+    "ability": "Spends health to deal damage.",
+    "description": "A cursed knight, eternally suffering in agony, uses his blood as a weapon and is able to deal colossal damage."
+  },
+  "Bombardier": {
+    "name": "Bombardier",
+    "damagetype": "Area Damage",
+    "rarity": "Mythic",
+    "ability": "Can deal damage to 5 targets.",
+    "description": "An elite artilleryman, who was once a cannoneer, now uses a huge weapon to destroy several enemies at once."
+  },
+  "Crossbowman": {
+    "name": "Crossbowman",
+    "damagetype": "Ranged Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": "An advanced hunter who can accurately hit a target from afar, but it takes him quite a while to reload his weapon."
+  },
+  "BanditThief": {
+    "name": "Bandit Thief",
+    "damagetype": "Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": "The bandit has no meaning in life except to enjoy the suffering of people and collect stolen gold from merchants."
+  },
+  "Marauder": {
+    "name": "Marauder",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Static damage.",
+    "description": "A destructive unit in the bandit gang. Many fear them, as they do not want to see their powerful maces, which they so eagerly use for robberies."
+  },
+  "GangLeader": {
+    "name": "Gang Leader",
+    "damagetype": "Damage",
+    "rarity": "Superrare",
+    "ability": "Increases all bandits' damage by 5.",
+    "description": "An authority among all bandits and robbers, lives a short and dangerous life, but has impressive authority and instills fear and horror among his subordinates and villagers."
+  },
+  "Bandit": {
+    "name": "Bandit",
+    "damagetype": "Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": "An ordinary vagabond who has devoted his life to robbery and attacking peaceful residents."
+  },
+  "Skeleton": {
+    "name": "Skeleton",
+    "damagetype": "Damage",
+    "rarity": "Common",
+    "ability": "Static damage.",
+    "description": ""
+  },
+  "corrosionSkeleton": {
+    "name": "Corrosion Skeleton",
+    "damagetype": "Damage",
+    "rarity": "Epic",
+    "ability": "Reduces target's defense by 5% when attacking.",
+    "description": ""
+  },
+  "royalMusketeer": {
+    "name": "Royal Musketeer",
+    "damagetype": "Ranged Damage",
+    "rarity": "Superrare",
+    "ability": "Increases musketeers' damage by 5.",
+    "description": "An elite soldier who serves the king with his powerful musket. In addition, he can command a squad of musketeers in deadly battles."
+  },
+  "musketeer": {
+    "name": "Musketeer",
+    "damagetype": "Ranged Damage",
+    "rarity": "Uncommon",
+    "ability": "Static damage.",
+    "description": "A soldier armed with a powerful firearm, capable of dealing heavy damage at a distance. Every musketeer wants to join the royal army and become an elite musketeer."
+  },
+  "lancer": {
+    "name": "Lancer",
+    "damagetype": "Damage",
+    "rarity": "Epic",
+    "ability": "Attacks first at the start of battle.",
+    "description": "A master of the spear and mounted combat. Thanks to his horse, he can easily maneuver on the battlefield and deliver very fast attacks."
+  },
+  "cuirassier": {
+    "name": "Cuirassier",
+    "damagetype": "Damage",
+    "rarity": "Epic",
+    "ability": "Has 90% defense before own turn.",
+    "description": "An elite knight dressed in the densest armor. His defense helps him withstand many sword blows and arrows. However, do not forget about his sword, with which he can cut down enemies without problems."
+  },
+  "guardCaptain": {
+    "name": "Guard Captain",
+    "damagetype": "Damage",
+    "rarity": "Mythic",
+    "ability": "Increases allies' defense by 10% at battle start.",
+    "description": "The guard captain knows the defense of the kingdom better than anyone. The perfect defender, able to use his knowledge of places for tricks, maneuvers, and protecting his allies."
+  },
+  "knight": {
+    "name": "Knight",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Static damage.",
+    "description": "A warrior who has taken the hard path of defending the kingdom. Donning armor and taking up a sword, he is ready day and night to protect his people from any threats."
+  },
+  "clubman": {
+    "name": "Clubman",
+    "damagetype": "Pierce",
+    "rarity": "Rare",
+    "ability": "Attack penetrates 50% of enemy defense.",
+    "description": "A warrior who prefers to use a club instead of a sword. Instead of a knight's oath, he decided to protect his allies with a powerful mace, which can pierce enemy armor."
+  },
+  "guardian": {
+    "name": "Guardian",
+    "damagetype": "Damage",
+    "rarity": "Rare",
+    "ability": "Has 50% defense before own turn.",
+    "description": "Guardian is a royal guard who was trained to maintain order in the kingdom and repel impending threats. One day he dreams of becoming a recognized elite guard and personally protecting the king from dangers."
+  },
+  "halberdier": {
+    "name": "Halberdier",
+    "damagetype": "Pierce",
+    "rarity": "Epic",
+    "ability": "Attack penetrates 50% of enemy defense. Has 65% defense before own turn.",
+    "description": "Halberdier is an elite soldier, excellently skilled with a halberd. His weapon delivers very powerful blows and can skillfully keep distance with enemies for a while."
+  },
+  "cavalierGuard": {
+    "name": "Cavalierguard",
+    "damagetype": "Damage",
+    "rarity": "Legendary",
+    "ability": "Front row attacks first at the start of battle.",
+    "description": "A cavalryman who was tasked with maintaining order throughout the kingdom, always has several tricks for maneuvers and quick attacks. In addition, he has excellent horseback riding and combat skills."
+  },
+  "mageStudent": {
+    "name": "Mage Student",
+    "damagetype": "Magic Damage",
+    "rarity": "Uncommon",
+    "ability": "Attacks ignore enemy defense.",
+    "description": "A young mage who chose the path of studying magic in hopes of becoming a great wizard. He already shows good results at the academy, but he can't wait to put his knowledge into practice, so despite the mortal danger, he gladly goes to the battlefield."
+  },
+  "Shaman": {
+    "name": "Shaman",
+    "damagetype": "Magic Damage",
+    "rarity": "Superrare",
+    "ability": "Attacks ignore enemy defense and restore 15 health.",
+    "description": "A mage who separated from civilization and lives in the forest with other shamans. During this time, he has excellently learned elemental magic and can use it to protect nature and his companions."
+  },
+  "Elder": {
+    "name": "Elder",
+    "damagetype": "Magic Damage",
+    "rarity": "Epic",
+    "ability": "Attacks ignore enemy defense and may trigger one of the following: +50% damage, defense curse by 5, or heal by 25.",
+    "description": "A wise shaman who has learned all the secrets of elemental magic and especially nature, thanks to which he has gained great authority in his village, and is able to use many spells to protect his followers and nature."
+  },
+  "wizard": {
+    "name": "Wizard",
+    "damagetype": "Magic Damage",
+    "rarity": "Superrare",
+    "ability": "Attacks ignore enemy defense.",
+    "description": "A powerful mage who has learned many techniques and spells during battles, now can truly be called a wizard. His magic can deal great damage to enemies."
+  },
+  "pilgrim": {
+    "name": "Pilgrim",
+    "damagetype": "Curse of Defense",
+    "rarity": "Common",
+    "ability": "Reduces enemy defense.",
+    "description": "The pilgrim set out on a journey to holy places to find himself and his purpose. He never loses faith in the Lord for a second, and in the end he is sure that he will find his place in this world."
+  },
+  "exorcist": {
+    "name": "Exorcist",
+    "damagetype": "Magic Damage",
+    "rarity": "Epic",
+    "ability": "Attacks ignore enemy defense and deal double damage to undead.",
+    "description": "A follower of God who found his calling in exorcising evil spirits and demons. With his faith and magic, he can destroy undead and demons, protecting the world from darkness."
+  },
+  "monk": {
+    "name": "Monk",
+    "damagetype": "Curse of Defense",
+    "rarity": "Uncommon",
+    "ability": "Reduces enemy defense.",
+    "description": "A monk who devoted his life to serving the Lord and studying his teachings. His calmness and devotion to God make him strong and wise."
+  },
+  "swordsman": {
+    "name": "Swordsman",
+    "damagetype": "Damage",
+    "rarity": "Superrare",
+    "ability": "Static damage.",
+    "description": "An elite knight, perfectly skilled with sword and shield. Many knights envy his skills, but he bears great responsibility for the safety of the kingdom. He must protect the king at any cost, even his own life."
+  },
+  "maceMercenary": {
+    "name": "Mace Mercenary",
+    "damagetype": "Pierce",
+    "rarity": "Superrare",
+    "ability": "Attacks penetrate 75% of enemy defense.",
+    "description": "A mercenary who prefers his huge mace to armor. He is ready to fight for money and glory, and is not afraid to risk his life for victory, his fearlessness instills horror in the hearts of enemies and mercilessly cuts them down on the battlefield."
+  },
+  "hammerman": {
+    "name": "Hammerman",
+    "damagetype": "Pierce",
+    "rarity": "Epic",
+    "ability": "Attacks penetrate 100% of enemy defense.",
+    "description": "A warrior with a mace, in whom the king saw potential, and personally blessed him by giving him armor and deadly weapons in exchange for loyal service and devotion."
+  },
+  "horseCrossbowman": {
+    "name": "Horse Crossbowman",
+    "damagetype": "Ranged Damage",
+    "rarity": "Superrare",
+    "ability": "Acts first at the start of battle.",
+    "description": "A crossbowman who mounted a horse for more mobile shooting. Thanks to the horse, he can catch enemies by surprise and strike them first."
+  },
+  "garrisonShooter": {
+    "name": "Garrison Shooter",
+    "damagetype": "Ranged Damage",
+    "rarity": "Rare",
+    "ability": "Static damage.",
+    "description": "An archer specially trained to defend the garrison. His excellent shooting skills and accuracy allow him to quickly and accurately hit targets on the battlefield."
+  },
+  "spartacus": {
+    "name": "Spartacus",
+    "damagetype": "Damage",
+    "rarity": "Special",
+    "ability": "At the start of battle, applies 'Bloody Rain' to enemies. Allies increase their damage by 2 when attacking an enemy with this effect.",
+    "description": "A legendary gladiator who fought in the Colosseum and became a symbol of freedom for many slaves. He was never troubled by fear, and was always ready to fight for the freedom of his people, even if he had to destroy all his enemies to the last."
+  },
+  "items": {
+    "speed_grass": "Speed Grass",
+    "unusual_water": "Unusual Water",
+    "magic_water": "Magic Water",
+    "root_of_power": "Root of Power",
+    "pile_of_earth": "Pile of Earth",
+    "gulliver_genes": "Gulliver's Genes",
+    "iron_ingot": "Iron Ingot",
+    "iron_ore": "Iron Ore",
+    "wood": "Wood",
+    "battle_records": "Battle Records",
+    "battery": "Battery",
+    "robot_chip": "Robot Chip",
+    "essence_lightning": "Essence of Lightning",
+    "essence_fire": "Essence of Fire",
+    "essence_water": "Essence of Water",
+    "essence_earth": "Essence of Earth",
+    "essence_ice": "Essence of Ice",
+    "essence_air": "Essence of Air",
+    "essence_light": "Essence of Light",
+    "essence_darkness": "Essence of Darkness",
+    "armor_plates": "Armor Plates",
+    "potion_speed": "Potion of Speed",
+    "potion_strength": "Potion of Strength",
+    "potion_slowness": "Potion of Slowness",
+    "faith": "Faith",
+    "potion_gigantism": "Potion of Gigantism",
+    "titanium_ingot": "Titanium Ingot",
+    "titanium_ore": "Titanium Ore",
+    "laser_batteries": "Laser Batteries",
+    "ai_chip": "AI Chip",
+    "infected_blood": "Infected Blood",
+    "potion_frenzy": "Potion of Frenzy",
+    "curse": "Curse",
+    "obsidian_ingot": "Obsidian Ingot",
+    "obsidian": "Obsidian",
+    "battle_books": "Battle Books",
+    "coins": "Coins",
+    "laser_ingot": "Laser Ingot",
+    "laser_ore": "Laser Ore",
+    "diamond_battery": "Diamond Battery",
+    "diamond": "Diamond",
+    "uranium": "Uranium",
+    "superintelligence_chip": "Superintelligence Chip",
+    "potion_rage": "Potion of Rage",
+    "supermetal_ingot": "Supermetal Ingot",
+    "battle_medals": "Battle Medals",
+    "horse": "Horse",
+    "support_flag": "Support Flag",
+    "universal_alloy": "Universal Alloy",
+    "sword_of_protection": "Sword of Protection",
+    "absolute_armor": "Absolute Armor",
+    "void_staff": "Void Staff",
+    "unknown_ingot": "Unknown Ingot",
+    "unknown_ore": "Unknown Ore",
+    "blade_piercing_darkness": "Blade Piercing the Darkness",
+    "angels_blessing": "Angels' Blessing",
+    "battle_aura": "Battle Aura",
+    "destruction_protocol": "DestructiØn PrØtocØl",
+    "medkit": "Medkit",
+    "piece_of_cloth": "Piece of Cloth",
+    "piece_of_leather": "Piece of Leather",
+    "rope": "Rope",
+    "bow": "Bow",
+    "pitchfork": "Pitchfork",
+    "sword": "Sword",
+    "stone": "Useful rock",
+    "spear": "Spear",
+    "axe": "Axe",
+    "light_armor": "Light Armor",
+    "shield": "Shield",
+    "cloak": "Cloak",
+    "steel_ingot": "Steel Ingot",
+    "steel_ore": "Steel Ore",
+    "obsidian_blade": "Obsidian Blade",
+    "portable_cannon": "Portable Cannon",
+    "dense_armor": "Dense Armor",
+    "bloodthirst_blade": "Bloodthirst Blade",
+    "elite_guard_spear": "Elite Guard's Spear",
+    "soul_of_vengeance": "Soul of Vengeance",
+    "fallen_king_sword": "Fallen King's Sword",
+    "alien_ingot": "Alien Ingot",
+    "alien_ore": "Alien Ore",
+    "aura_of_protection": "Aura of Protection",
+    "absolute_ore": "Absolute Ore",
+    "absolute_ingot": "Absolute Ingot",
+    "essence_of_elements": "Essence of Elements",
+    "essence_of_balance": "Essence of Balance",
+    "bombard": "Bombard",
+    "cape": "Cape",
+    "mace": "Mace",
+    "steel_blade": "Steel Blade",
+    "blade": "Blade",
+    "musket": "Musket",
+    "broadsword": "Broadsword",
+    "thiefs_ring": "Thief's Ring",
+    "bones": "Bones",
+    "corrosion_potion": "Corrosion Potion",
+    "elite_knight_armor": "Elite Knight Armor",
+    "halberd": "Halberd",
+    "armor": "Armor",
+    "steel_sword": "Steel Sword",
+    "book_of_demon_banishment": "Book of Demon Banishment",
+    "staff": "Staff",
+    "morning_star": "Morning Star",
+    "powerful_crossbow": "Powerful Crossbow",
+    "powerful_bow": "Powerful Bow",
+    "mages_staff": "Mage's Staff",
+    "human_vessel": "Human Vessel",
+    "inhuman_vessel": "Inhuman Vessel",
+    "undead_vessel": "Undead Vessel",
+    "cybernetic_vessel": "Cybernetic Vessel",
+    "hero_vessel": "Heroic Vessel",
+    "void_vessel": "Void Vessel"
+    }
+}

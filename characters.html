@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="Characters">Персонажи</title>
+    <link rel="stylesheet" href="character.css" var="v1.1">
+    <script src="https://unpkg.com/i18next@23.4.6/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-http-backend@2.2.0/i18nextHttpBackend.min.js"></script>
+</head>
+<body>
+    <div id="player-panel" style="display: flex; align-items: center; gap: 16px; background: #f5f5f5; border-bottom: 1px solid #ccc; cursor:pointer; width:100%; height: 60px">
+        <img id="player-avatar" src="./images/avatar_default.png" alt="Аватар" style="width:48px; height:48px; border-radius:50%; object-fit:cover; transition:filter 0.2s; padding: 10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+            <span id="player-nickname" style="font-size: 1.2em; font-weight: bold;">Игрок</span>
+        </div>
+        <div id="player-level" style="background:#e0e0e0; border-radius:12px; padding:2px 10px; font-weight:bold; margin-left:8px;" >
+            <span data-i18n="Level" style="font-weight:bold"></span>
+            <span id="player-level-number" style="font-weight:bold"></span>
+        </div>
+        <button id="level-rewards-btn" title="Награды за уровень" style="width:32px;height:32px;min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center;background:#ffffff00;border:1px solid #ccc;border-radius:6px;cursor:pointer;margin-left:12px;">
+           <img id="level-rewards-icon" src="./images/trophy.png" alt="trophy" style="width:32px; height:32px; border-radius:20px; object-fit:cover; transition:filter 0.2s; padding: 10px;">
+        </button>
+    </div>
+    <div id="tabs">
+        <button class="tab-button active" data-tab="characters-tab" data-i18n="Characters">Персонажи</button>
+        <button class="tab-button" data-tab="inventory-tab" data-i18n="Inventory">Инвентарь</button>
+        <button class="tab-button" data-tab="ascension-tab" data-i18n="Ascension" style="display:none;">Возвышение</button>
+        <button class="tab-button" data-tab="settings-tab" data-i18n="Settings">Настройки</button>
+    </div>
+
+    <div id="characters-tab" class="tab-content active">
+        <div id="main">
+            <div id="main-content">
+                <div id="rarity-filters" style="display: flex; gap: 10px; margin-bottom: 18px;">
+                    <button class="rarity-filter-btn" data-rarity="Common" data-i18n="Common">Обычные</button>
+                    <button class="rarity-filter-btn" data-rarity="Uncommon" data-i18n="Uncommon">Необычные</button>
+                    <button class="rarity-filter-btn" data-rarity="Rare" data-i18n="Rare">Редкие</button>
+                    <button class="rarity-filter-btn" data-rarity="Superrare" data-i18n="Superrare">Сверхредкие</button>
+                    <button class="rarity-filter-btn" data-rarity="Epic" data-i18n="Epic">Эпические</button>
+                    <button class="rarity-filter-btn" data-rarity="Mythic" data-i18n="Mythic">Мифические</button>
+                    <button class="rarity-filter-btn" data-rarity="Legendary" data-i18n="Legendary">Легендарные</button>
+                </div>
+                <h2 data-i18n="Characters">Персонажи</h2>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <label for="sort-characters" data-i18n="Sort by">Сортировка:</label>
+                    <select id="sort-characters">
+                        <option value="rarity" data-i18n="Sort by Rarity">Редкость</option>
+                        <option value="level" data-i18n="Sort by Level">Уровень</option>
+                        <option value="name" data-i18n="Sort by Name">Имя</option>
+                        <option value="speed" data-i18n="Sort by Speed">Скорость</option>
+                    </select>
+                </div>
+                <ul id="characters-list" style="padding-right: 400px"></ul>
+            </div>
+            <div id="character-info-panel" style="display:none"></div>
+            <div id="bottom-panel">
+                <button id="toggle-bottom-panel-btn" aria-label="Toggle panel">
+                    <svg id="toggle-bottom-panel-icon" width="28" height="28" viewBox="0 0 28 28">
+                        <polyline points="6,10 14,18 22,10" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h2 style="text-align:center; font-weight:bold; margin-bottom:2px;" data-i18n="Your Squad">Ваш отряд</h2>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <ul id="allies-front-grid" class="allies-grid" style="grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; gap: 8px 8px; min-height: 60px;"></ul>
+                    <ul id="allies-back-grid" class="allies-grid" style="grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr; gap: 8px 8px; min-height: 60px;"></ul>
+                </div>
+                <div style="display: flex; flex-direction: row; width:90%; gap:10px; justify-content: center;">
+                    <button id="save-squad-btn" data-i18n="Save">Сохранить отряд</button>
+                    <button id="clear-button" data-i18n="Clear Squad">Очистить отряд</button>
+                </div>
+                <div style="display: flex; flex-direction: row; width:90%; gap:10px; justify-content: center;">
+                    <button id="random-fight-button" disabled data-i18n="Random Battle" style="display:none;">Случайная битва</button>
+                    <button id="campaign-button" data-i18n="Campaign">Кампания</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="inventory-tab" class="tab-content">
+        <div id="inventory-window">
+            <h1 data-i18n="Inventory">Инвентарь</h1>
+            <div style="margin-bottom: 10px;">
+            </div>
+            <div id="inventory-grid" class="inventory-grid">
+                <!-- Ячейки инвентаря будут добавляться динамически -->
+            </div>
+        </div>
+        <div id="crafting-panel" style="display:none;">
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button id="toggle-crafting-heroes" class="tab-button active" data-i18n="Craft Heroes">Выведение героев</button>
+                <button id="toggle-crafting-items" class="tab-button" data-i18n="Craft Items">Крафт предметов</button>
+            </div>
+            <div id="crafting-heroes" class="crafting-section active">
+                <h2 data-i18n="Breeding">Выведение</h2>
+                <div id="crafting-list" class="crafting-list">
+                    <!-- Список персонажей для крафта -->
+                </div>
+                <div id="crafting-recipe">
+                    <h3 data-i18n="Recipe">Рецепт</h3>
+                    <div id="recipe-items">
+                        <!-- Ячейки рецепта -->
+                    </div>
+                    <p id="crafting-error" style="color: red; display: none;" data-i18n="Not enough resources">Недостаточно ресурсов!</p>
+                    <button id="craft-button" disabled data-i18n="Breed">Вывести</button>
+                </div>
+            </div>
+            <div id="crafting-items" class="crafting-section" style="display: none;">
+                <h2 data-i18n="Craft Items">Крафт предметов</h2>
+                <div id="item-crafting-list" class="crafting-list">
+                    <!-- Список предметов для крафта -->
+                </div>
+                <div id="item-crafting-recipe">
+                    <h3 data-i18n="Recipe">Рецепт</h3>
+                    <div id="item-recipe-items">
+                        <!-- Ячейки рецепта -->
+                    </div>
+                    <p id="item-crafting-error" style="color: red; display: none;" data-i18n="Not enough resources">Недостаточно ресурсов!</p>
+                    <button id="item-craft-button" disabled data-i18n="Craft">Скрафтить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ascension-tab" class="tab-content" style="display:none;">
+        <div id="main" style="display: flex;">
+            <div id="main-content" style="flex: 2;">
+                <div id="rarity-filters" style="display: flex; gap: 10px; margin-bottom: 18px;"></div>
+                <h1 data-i18n="Ascension Characters">Персонажи для возвышения</h1>
+                <ul id="ascension-characters-list" style="padding-right: 500px"></ul>
+            </div>
+            <div id="side-panel">
+                <h2 style="text-align:center;" data-i18n="Ascension Panel">Панель возвышения</h2>
+                <div id="ascension-dropzone" style="width:80px;height:80px;border:2px dashed #000000;border-radius:12px;display:flex;align-items:center;text-align:center;justify-content:center;margin:0 auto 18px auto;background:#f9f9f9;font-size:13px;">
+                    <span id="ascension-dropzone-placeholder" style="color:#000000;" data-i18n="Drag character here">Перетащите персонажа</span>
+                </div>
+                <svg id="ascension-arrows" width="220"style="display:block;margin:0 auto 0 auto;height: 60px;">
+                    <line x1="55" y1="0" x2="20" y2="40" stroke="#888" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="110" y1="0" x2="110" y2="40" stroke="#888" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="165" y1="0" x2="200" y2="40" stroke="#888" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto" markerUnits="strokeWidth">
+                            <polygon points="0 0, 8 4, 0 8" fill="#888"/>
+                        </marker>
+                    </defs>
+                </svg>
+                <div id="ascension-branches" style="display:flex;gap:16px;justify-content: center;">
+                    <div class="ascension-branch" style="flex:1;text-align:center; max-width: fit-content;">
+                        <div class="ascension-target" style="width:70px;height:70px;background:#aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#000000;border:2px solid black;font-size:12px;">-</div>
+                    </div>
+                    <div class="ascension-branch" style="flex:1;text-align:center; max-width: fit-content;">
+                        <div class="ascension-target" style="width:70px;height:70px;background:#aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#000000;border:2px solid black;font-size:12px;">-</div>
+                    </div>
+                    <div class="ascension-branch" style="flex:1;text-align:center; max-width: fit-content;">
+                        <div class="ascension-target" style="width:70px;height:70px;background:#aaa;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#000000;border:2px solid black;font-size:12px;">-</div>
+                    </div>
+                </div>
+                <div id="ascension-recipe-panel" style="margin-top:18px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-tab" class="tab-content" style="display:none; height: 100vh; box-sizing: border-box;">
+        <div class="settings-center">
+            <div class="settings-buttons">
+                <div style="flex: 1">
+                    <button id="import-settings-btn" data-i18n="Import">Импорт</button>
+                    <button id="export-settings-btn" data-i18n="Export">Экспорт</button>
+                    <button id="lang-switch-btn" data-i18n="Switch to English">Switch to English</button>
+                </div>
+                <div style="flex: 2; display: flex; flex-direction: row; gap: 8px;">
+                    <div class="settings-volume">
+                        <label for="music-volume" data-i18n="Music Volume">Громкость музыки</label>
+                        <input type="range" id="music-volume" min="0" max="1" step="0.01" value="1">
+                        <span id="music-volume-value">100%</span>
+                    </div>
+                    <div class="settings-volume">
+                        <label for="sound-volume" data-i18n="Sound Volume">Громкость звуков</label>
+                        <input type="range" id="sound-volume" min="0" max="1" step="0.01" value="1">
+                        <span id="sound-volume-value">100%</span>
+                    </div>
+                </div>
+                    <div style="flex: 3">
+                        <button id="reset-game-btn" data-i18n="Reset Game">Сбросить игру</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="crafting-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 data-i18n="Crafting Success">Успешное выведение!</h2>
+            <p id="crafted-character-name"></p>
+            <button id="close-modal-button" data-i18n="OK">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="materialize-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span id="close-materialize-modal" style="cursor:pointer;float:right;width:50px;height:50px;font-size:30px">&times;</span>
+            <h3 data-i18n="Materialize Character">Материализовать персонажа?</h3>
+            <span data-i18n="Materialize Info">Он получит индивидуальность и возможность улучшаться и возвышаться, однако его будет нельзя использовать для выведений.</span>
+            <p id="materialize-character-info"></p>
+            <button id="materialize-confirm" data-i18n="Materialize">Материализовать</button>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="min-width:340px;max-width:700px;">
+            <div style="display:flex;align-items:center;gap:20px;">
+                <div style="position:relative;">
+                    <img id="profile-avatar" src="./images/avatar_default.png" alt="Аватар" style="width:90px;height:90px;border-radius:50%;object-fit:cover;transition:filter 0.2s;cursor:pointer;">
+                    <input type="file" id="avatar-input" accept="image/*" style="display:none;">
+                </div>
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span id="profile-nickname" style="font-size:1.5em;font-weight:bold;" data-i18n="Characters">Игрок</span>
+                        <img id="profile-edit-nickname" src="./images/edit_icon.svg" alt="Изм." style="width:18px;height:18px;cursor:pointer;opacity:0.7;">
+                    </div>
+                    <input id="nickname-input" type="text" style="display:none;margin-top:4px;">
+                </div>
+            </div>
+            <div style="margin:18px 0 8px 0;display:flex;align-items:center;gap:18px;">
+                <div style="width:54px;height:54px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:bold;">
+                    <span id="profile-level">1</span>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:0.95em;margin-bottom:2px;" id="profile-exp-label" data-i18n="Experience">Опыт: 0/100</div>
+                    <div style="background:#ddd;border-radius:8px;height:14px;overflow:hidden;">
+                        <div id="profile-exp-bar" style="background:#4caf50;height:100%;width:0%;transition:width 0.3s;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:18px; ">
+                <div style="font-weight:bold;margin-bottom:6px;" data-i18n="Saved Squad">Сохранённый отряд:</div>
+                <div id="saved-squad-list" style="display:flex;gap:8px;flex-wrap:wrap; justify-content: center; flex-direction: column;"></div>
+            </div>
+            <button id="close-profile-modal" style="margin-top:18px;" data-i18n="OK">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="campaign-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="min-width:400px;max-width:700px;">
+            <h2 data-i18n="Campaign">Кампания</h2>
+            <div id="campaign-levels-grid" >
+                <div class="campaign-levels" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;"></div>
+                <div class="campaign-levels" style="display:none;grid-template-columns:repeat(5,1fr);gap:12px;"></div>
+                <div class="campaign-levels" style="display:none;grid-template-columns:repeat(5,1fr);gap:12px;"></div>
+                <div class="campaign-levels" style="display:none;grid-template-columns:repeat(5,1fr);gap:12px;"></div>
+                <div class="campaign-levels" style="display:none;grid-template-columns:repeat(5,1fr);gap:12px;"></div>
+            </div>
+            <div id="location-choices" style="display:flex;gap:10px;justify-content:center;">
+                <button class="location-choose" data-i18n="Field">Деревня</button>
+                <button class="location-choose" data-i18n="Village">Город</button>
+                <button class="location-choose" data-i18n="Bandit Lair">Логово бандитов</button>
+                <button class="location-choose" data-i18n="Town">Столица</button>
+                <button class="location-choose" data-i18n="City">Замок Короля</button>
+            </div>
+            <button id="close-campaign-modal" style="margin-top:18px;" data-i18n="OK">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="ascension-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2 data-i18n="Ascension Success">Возвышение успешно!</h2>
+            <p id="ascension-modal-text"></p>
+            <button id="close-ascension-modal" data-i18n="OK">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="level-rewards-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="min-width:400px;max-width:900px;">
+            <h2 data-i18n="Level Rewards">Награды за уровень</h2>
+            <div id="level-rewards-list" style="display:flex;gap:18px;overflow-x:auto;padding:10px 0;"></div>
+            <button id="close-level-rewards-modal" style="margin-top:18px;" data-i18n="OK">Закрыть</button>
+        </div>
+    </div>
+
+    <footer id="game-footer" style="position:fixed;left:0;bottom:0;padding:8px 18px;font-size:1.1em;z-index:2000;cursor:pointer;" data-i18n="version_0_1_title">
+        v0.1 alpha
+    </footer>
+    <div id="version-modal" class="modal" style="display:none;align-items:center;justify-content:center">
+        <div class="modal-content" style="min-width:700px;max-width:1100px;display:flex;gap:0;text-align: left;height:600px">
+            <div style="width:180px;padding:18px 0;">
+                <button class="version-select-btn" data-version="0.1" style="width:100%;padding:8px 0;" data-i18n="version_0_1_title">v0.1 alpha</button>
+            </div>
+            <div style="flex:1;padding:24px;">
+                <h2 id="version-modal-title"></h2>
+                <span id="version-modal-changelog"  data-i18n="First Alpha Version">ки.</span>
+            </div>
+        </div>
+    </div>
+    <script src="language.js"></script>
+    <script src="settings.js"></script>
+    <script src="initialization.js"></script>
+    <script src="characters.js"></script>
+    <script>
+        localStorage.removeItem('currentLevel');
+    </script>
+</body>
+</html>

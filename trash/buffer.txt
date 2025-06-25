@@ -1,0 +1,161 @@
+        <div class="enemy">
+            <h3>Враг: Скоростник</h3>
+            <span>Здоровье: <span id="Speedy-health">75</span></span>
+            <span>Урон: 10</span>
+            <button id="attackSpeedy">Атаковать Скоростника</button>
+        </div>
+        <div class="enemy">
+            <h3>Враг: Медлитель</h3>
+            <span>Здоровье: <span id="Slowy-health">125</span></span>
+            <span>Урон: 20</span>
+            <button id="attackSlowy">Атаковать Медлителя</button>
+        </div>
+        <div class="enemy">
+            <h3>Враг: Берсерк</h3>
+            <span>Здоровье: <span id="Berserker-health">45</span></span>
+            <span>Урон: 30</span>
+            <button id="attackBerserker">Атаковать Берсерка</button>
+        </div>
+
+               <div class="hero">
+            <h2>Союзник: Крестьянин</h2>
+            <span>Здоровье: <span id="Balanced-health">100</span></span>
+            <span>Урон: 12</span>
+        </div>
+        <div class="hero">
+            <h2>Союзник: Молниеносец</h2>
+            <span>Здоровье: <span id="Lightning-health">50</span></span>
+            <span>Урон: 7</span>
+        </div>
+        <div class="hero">
+            <h2>Союзник: Герой</h2>
+            <span>Здоровье: <span id="Hero-health">75</span></span>
+            <span>Урон: 15</span>
+        </div>
+
+                // Обычные персонажи из инвентаря
+        // inventory.filter(item => item.type === 'character')
+        //     .filter(item => {
+        //         const characterData = characters.find(c => c.name === item.name);
+        //         return characterData && (activeRarities.includes(characterData.rarity) || activeRarities.length === 0);
+        //     })
+        //     .forEach(item => {
+        //         const characterData = characters.find(c => c.name === item.name);
+        //         if (!characterData) return;
+        //         const listItem = document.createElement('li');
+        //         listItem.classList.add(getRarityClass(characterData.rarity));
+        //         listItem.innerHTML = `
+        //             <span style="font-weight:bold; display:flex; justify-content:center; font-size:22px">${item.name} (${item.quantity})</span> <br>
+        //             <strong>Редкость:</strong> <span style="font-weight:bold">${characterData.rarity}</span><br>
+        //             <strong>Здоровье:</strong> ${characterData.health}<br>
+        //             <strong>Защита:</strong> ${characterData.defense}%<br>
+        //             <strong>${characterData.damagetype}:</strong> ${typeof characterData.damage === 'function' 
+        //                 ? Math.round(characterData.damage.call(characterData)) 
+        //                 : characterData.damage}<br>
+        //             <strong>Скорость:</strong> ${characterData.speed}<br>
+        //             <strong>Особенность:</strong> ${characterData.description}<br>
+        //         `;
+        //         listItem.addEventListener('click', () => {
+        //             // Поиск первой свободной ячейки в сетке
+        //             let gridArr = isSelectingFront ? selectedAlliesFront : selectedAlliesBack;
+        //             let idx = gridArr.findIndex(cell => cell === null);
+        //             if (idx !== -1 && item.quantity > 0) {
+        //                 gridArr[idx] = { ...characterData };
+        //                 saveSelectedCharacters();
+        //                 item.quantity--;
+        //                 if (item.quantity === 0) {
+        //                     const index = inventory.findIndex(i => i.name === item.name);
+        //                     inventory.splice(index, 1);
+        //                 }
+        //                 localStorage.setItem('inventory', JSON.stringify(inventory));
+        //                 loadInventory();
+        //                 renderAllGrids();
+        //                 updateCharactersList();
+        //             }
+        //         });
+        //         list.appendChild(listItem);
+        //     });
+
+        toggleButton.addEventListener('click', () => {
+    isSelectingAllies2 = !isSelectingAllies2;
+    toggleButton.textContent = isSelectingAllies2 ? 'Переключить на врагов' : 'Переключить на союзников';
+    updateCharactersList();
+});
+toggleFrontButton.addEventListener('click', () => {
+    isSelectingFront = !isSelectingFront;
+    if (isSelectingFront) {
+        toggleFrontButton.textContent = 'Выбрать задний фронт'
+        document.getElementById('front').style.color = 'green'
+        document.getElementById('backFront').style.color = 'black'
+    } else {
+        toggleFrontButton.textContent = 'Выбрать передний фронт';
+        document.getElementById('front').style.color = 'black'
+        document.getElementById('backFront').style.color = 'green'
+     }
+    updateCharactersList();
+});
+
+// function renderFrontGrid(gridId, arr, isAlly) {
+//     const grid = document.getElementById(gridId);
+//     grid.innerHTML = '';
+//     arr.forEach((char, idx) => {
+//         if (!char) return; // <-- Добавьте эту строку!
+//         const cell = document.createElement('li');
+//         cell.classList.add(isAlly ? 'ally' : 'enemy');
+//         cell.textContent = char.name;
+//         cell.title = char.name;
+//         cell.onclick = () => {
+//             arr[idx] = null;
+//             saveSelectedCharacters();
+//             renderAllGrids();
+//             updateCharactersList();
+//         };
+//         grid.appendChild(cell);
+//     });
+// }
+
+// --- Рендер всех сеток ---
+// function renderAllGrids() {
+//     renderFrontGrid('allies-front-grid', selectedAlliesFront, true);
+//     renderFrontGrid('allies-back-grid', selectedAlliesBack, true);
+//     renderFrontGrid('enemies-front-grid', selectedEnemiesFront, false);
+//     renderFrontGrid('enemies-back-grid', selectedEnemiesBack, false);
+// }
+
+// --- Материализация персонажей ---
+inventoryGrid.addEventListener('click', function(e) {
+    const cell = e.target.closest('.inventory-cell');
+    if (!cell) return;
+    const idx = Array.from(inventoryGrid.children).indexOf(cell);
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const item = inventory[idx];
+    if (!item || item.type !== 'character') return;
+    const modal = document.getElementById('materialize-modal');
+    const info = document.getElementById('materialize-character-info');
+    info.textContent = `${item.name} (${item.rarity})`;
+    modal.style.display = 'block';
+    modal.dataset.idx = idx;
+});
+document.getElementById('close-materialize-modal').onclick = function() {
+    document.getElementById('materialize-modal').style.display = 'none';
+};
+document.getElementById('materialize-confirm').onclick = function() {
+    const modal = document.getElementById('materialize-modal');
+    const idx = +modal.dataset.idx;
+    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const item = inventory[idx];
+    if (!item) return;
+    item.quantity--;
+    if (item.quantity <= 0) inventory.splice(idx, 1);
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    const base = characters.find(c => c.name === item.name && c.rarity === item.rarity);
+    if (base) {
+        const newChar = { ...base, id: Date.now() + Math.random(), level: 1, exp: 0, maxExp: 100 };
+        materializedCharacters.push(newChar);
+        localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
+    }
+    document.getElementById('materialize-modal').style.display = 'none';
+    loadInventory();
+    renderMaterializedCharacters();
+    updateCharactersList();
+};

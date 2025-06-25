@@ -1,0 +1,3434 @@
+// --- Константы и данные ---
+const defaultProfile = {
+    nickname: "Player",
+    avatar: "./images/avatar_default.png",
+    level: 1,
+    exp: 0,
+    maxExp: 100
+};
+
+const rarityOrder = ["Обычный", "Необычный", "Редкий", "Сверхредкий", "Эпический", "Мифический", "Легендарный"];
+const rarityColors = {
+    "Обычный": "#e0e0e0", "Необычный": "#b6ffb6", "Редкий": "#ffd27e",
+    "Сверхредкий": "#4d7aff", "Эпический": "#b84dff", "Мифический": "#ff4d4d", "Легендарный": "#ffa751"
+};
+const rarityColors2 = {
+    "Обычный": "rarity-common", "Необычный": "rarity-uncommon", "Редкий": "rarity-rare",
+    "Сверхредкий": "rarity-superrare", "Эпический": "rarity-epic", "Мифический": "rarity-mythic", "Легендарный": "rarity-legendary"
+};
+
+let characters = [
+        { 
+            name: "Скоростник", 
+            code: "Speedy",
+            speed: 12.5,
+            health: 65,
+            maxHealth: 65,
+            defense: 0,
+            damage: 12,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        { 
+            name: "Медлитель", 
+            code: "Slowy",
+            speed: 4.25,
+            health: 140,
+            maxHealth: 140,
+            defense: 10,
+            damage: 30,
+            element: 'Земляной',
+            damagetype: 'Урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        { 
+            name: "Крестьянин", 
+            code: "Balanced",
+            speed: 9.75,
+            health: 80,
+            maxHealth: 80,
+            defense: 0,
+            damage: 15,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Молниеносец", 
+            code: "Lightning",
+            speed: 18,
+            health: 40,
+            maxHealth: 40,
+            defense: 0,
+            damage: 7,
+            element: 'Электрический',
+            damagetype: 'Урон',
+            rarity: 'Редкий',
+            description: "Атакует два раза.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Берсерк",
+            code: "Berserker",
+            speed: 7.5,
+            health: 70,
+            maxHealth: 70,
+            defense: 0,
+            damage: function() {
+                return 25 + ((70 - this.health) / 2);
+            },
+            element: 'Огненный',
+            damagetype: 'Урон',
+            rarity: 'Мифический',
+            description: "Повышает урон со снижением здоровья.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Герой",
+            code: "Hero",
+            speed: 6.5,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 20,
+            element: 'Светлый',
+            damagetype: 'Урон',
+            rarity: 'Легендарный',
+            description: "После атаки увеличивает свой урон на 5 и защиту на 2%.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Громила",
+            code: "Brute",
+            speed: 3.23,
+            health: 210,
+            maxHealth: 210,
+            defense: 10,
+            damage: 55,
+            element: 'Темный',
+            damagetype: 'Урон',
+            rarity: 'Сверхредкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Маг",
+            code: "Mage",
+            speed: 7.15,
+            health: 65,
+            maxHealth: 65,
+            defense: 0,
+            damage: 20,
+            element: 'Водяной',
+            damagetype: 'Магический урон',
+            rarity: 'Редкий',
+            description: "Атаки игнорируют защиту противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Лучник",
+            code: "Archer",
+            speed: 7.5,
+            health: 80,
+            maxHealth: 80,
+            defense: 0,
+            damage: 21,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Воин",
+            code: "Warrior",
+            speed: 6.25,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Убийца",
+            code: "Killer",
+            speed: 9.75,
+            health: 40,
+            maxHealth: 40,
+            defense: 0,
+            damage: 40,
+            element: 'Темный',
+            damagetype: 'Урон',
+            rarity: 'Эпический',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Танк",
+            code: "Tank",
+            speed: 3,
+            health: 330,
+            maxHealth: 330,
+            defense: 10,
+            damage: 30,
+            element: 'Земляной',
+            damagetype: 'Урон',
+            rarity: 'Редкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Кавалерист",
+            code: "Cavalier",
+            speed: 8.45,
+            health: 80,
+            maxHealth: 80,
+            defense: 10,
+            damage: 15,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Мифический',
+            description: "После атаки увеличивает урон на 5.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Пехотинец",
+            code: "Infantry",
+            speed: 7.85,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 15,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Пушкарь",
+            code: "Cannoneer",
+            speed: 4.25,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон по зоне',
+            rarity: 'Эпический',
+            description: "Пушкарь способен нанести большой урон 3 целям одновременно.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Гексадрон",
+            code: "Hexadrone",
+            speed: 15,
+            health: 40,
+            maxHealth: 40,
+            defense: 0,
+            damage: 12,
+            element: 'Огненный',
+            damagetype: 'Урон по зоне',
+            rarity: 'Сверхредкий',
+            description: "Гексадрон способен наносит урон 3 целям одновременно.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Король скелетов",
+            code: "SkeletonKing",
+            speed: 3.75,
+            health: 220,
+            maxHealth: 220,
+            defense: 0,
+            damage: function() {
+                return this.health * 0.15;
+            },
+            element: 'Ледяной',
+            damagetype: 'Урон',
+            rarity: 'Мифический',
+            description: "Наносит урон равный 15% от своего здоровья",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Щитоносец",
+            code: "ShieldBearer",
+            speed: 3.75,
+            health: 125,
+            maxHealth: 125,
+            defense: 50,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Сверхредкий',
+            description: "Поглощает 50% урона противника.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Скелет рыцарь",
+            code: "SkeletonKnight",
+            speed: 7.5,
+            health: 40,
+            maxHealth: 40,
+            defense: 35,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Необычный',
+            description: "Поглощает 35% урона противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Железный скелет",
+            code: "IronSkeleton",
+            speed: 6.55,
+            health: 10,
+            maxHealth: 10,
+            defense: 90,
+            damage: 25,
+            element: 'Ледяной',
+            damagetype: 'Урон',
+            rarity: 'Эпический',
+            description: "Поглощает 90% урона противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Везунчик",
+            code: "Lucky",
+            speed: 7.5,
+            health: 100,
+            maxHealth: 100,
+            defense: 0,
+            damage: '10-30',
+            element: 'Ледяной',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Эпический',
+            description: "Наносит от 10 до 30 урона.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Зомби Хищник",
+            code: "Zombiehunter",
+            speed: 8.33,
+            health: 85,
+            maxHealth: 85,
+            defense: 0,
+            damage: 20,
+            element: 'Тёмный',
+            damagetype: 'Урон',
+            class: 'Undead',
+            rarity: 'Сверхредкий',
+            description: "После атаки восстанавливает 20 здоровья.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Флагоносец",
+            code: "Flag",
+            speed: 4.15,
+            health: 100,
+            maxHealth: 100,
+            defense: 20,
+            damage: 20,
+            element: 'Светлый',
+            damagetype: 'Урон',
+            rarity: 'Легендарный',
+            description: "При атаке увеличивает атаку всем союзникам на 5 и защиту на 2%.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Боевой лекарь",
+            code: "Healer",
+            speed: 6,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 20,
+            element: 'Светлый',
+            damagetype: 'Урон',
+            rarity: 'Мифический',
+            description: "При атаке восстанавливает 15 здоровья всем союзникам.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Паладин",
+            code: "Paladin",
+            speed: 3.13,
+            health: 220,
+            maxHealth: 220,
+            defense: 10,
+            damage: 40,
+            element: 'Светлый',
+            damagetype: 'Урон',
+            rarity: 'Легендарный',
+            description: "После атаки увеличивает защиту всех союзников на 4%.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Владыка пустоты",
+            code: "Voidemperor",
+            speed: 5.33,
+            health: 140,
+            maxHealth: 140,
+            defense: 0,
+            damage: 10,
+            element: 'Тёмный',
+            damagetype: 'Магический урон',
+            rarity: 'Легендарный',
+            description: "Наносит урон всем врагам на поле боя и игнорирует защиту противника.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Священник",
+            code: "Saint",
+            speed: 8,
+            health: 100,
+            maxHealth: 100,
+            defense: 0,
+            damage: 30,
+            element: 'Светлый',
+            damagetype: 'Лечение',
+            rarity: 'Сверхредкий',
+            description: "Исцеляет союзника и не атакует.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Проклятый священник",
+            code: "Cursedsaint",
+            speed: 8.75,
+            health: 100,
+            maxHealth: 100,
+            defense: 0,
+            damage: 5,
+            element: 'Тёмный',
+            damagetype: 'Проклятье урона',
+            rarity: 'Сверхредкий',
+            description: "Понижает урон цели.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Падший священник",
+            code: "Fallensaint",
+            speed: 6.5,
+            health: 110,
+            maxHealth: 110,
+            defense: 10,
+            damage: 10,
+            element: 'Тёмный',
+            damagetype: 'Проклятье защиты',
+            rarity: 'Мифический',
+            description: "Понижает защиту цели.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Охотник",
+            code: "Hunter",
+            speed: 8,
+            health: 70,
+            maxHealth: 70,
+            defense: 0,
+            damage: 18,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Дроворуб",
+            code: "Woodcutter",
+            speed: 4.5,
+            health: 120,
+            maxHealth: 120,
+            defense: 0,
+            damage: 40,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Тетрадрон",
+            code: "Tetradrone",
+            speed: 5,
+            health: 75,
+            maxHealth: 75,
+            defense: 5,
+            damage: 15,
+            element: 'Нейтральный',
+            damagetype: 'Урон по зоне',
+            rarity: 'Редкий',
+            description: "Тетрадрон способен нанести урон по 3 целям.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Супердрон",
+            code: "Superdrone",
+            speed: 10,
+            health: 50,
+            maxHealth: 50,
+            defense: 5,
+            damage: 18,
+            element: 'Нейтральный',
+            damagetype: 'Урон по зоне',
+            rarity: 'Эпический',
+            description: "Супердрон способен нанести урон по 3 целям.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Ультрадрон",
+            code: "Ultradrone",
+            speed: 8,
+            health: 60,
+            maxHealth: 60,
+            defense: 5,
+            damage: 8,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Мифический',
+            description: "Ультрадрон способен нанести урон по всем целям.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Божественный священник",
+            code: "Godlikesaint",
+            speed: 7.5,
+            health: 110,
+            maxHealth: 110,
+            defense: 8,
+            damage: 5,
+            element: 'Нейтральный',
+            damagetype: 'Наложение защиты',
+            rarity: 'Мифический',
+            description: "Накладывает божественную защиту на союзника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Рыцарь крови",
+            code: "Bloodknight",
+            speed: 8.33,
+            health: 150,
+            maxHealth: 150,
+            defense: 0,
+            damage: 60,
+            element: 'Тёмный',
+            damagetype: 'Урон',
+            rarity: 'Сверхредкий',
+            description: "Тратит здоровье нанося урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Бомбардир",
+            code: "Bombardier",
+            speed: 3.33,
+            health: 150,
+            maxHealth: 150,
+            defense: 15,
+            damage: 35,
+            element: 'Нейтральный',
+            damagetype: 'Урон по зоне',
+            rarity: 'Мифический',
+            description: "Бомбардир способен нанести урон по 5 целям.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Арбалетчик",
+            code: "Crossbowman",
+            speed: 5.55,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 35,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        // {
+        //     name: "Грабитель",
+        //     code: "Robber",
+        //     speed: 8.15,
+        //     health: 80,
+        //     maxHealth: 80,
+        //     defense: 0,
+        //     damage: 20,
+        //     element: 'Нейтральный',
+        //     damagetype: 'Урон',
+        //     rarity: 'Обычный',
+        //     description: "Статичный урон.",
+        //     level: 1
+        // },
+        {
+            name: "Разбойник",
+            code: "BanditThief",
+            speed: 6.3,
+            health: 100,
+            maxHealth: 100,
+            defense: 0,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Необычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Мародёр",
+            code: "Marauder",
+            speed: 5.45,
+            health: 125,
+            maxHealth: 125,
+            defense: 5,
+            damage: 30,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Редкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Главарь банды",
+            code: "GangLeader",
+            speed: 4.65,
+            health: 135,
+            maxHealth: 135,
+            defense: 5,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Сверхредкий',
+            description: "Увеличивает урон всем бандитам на 5.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Бандит",
+            code: "Bandit",
+            speed: 9.85,
+            health: 70,
+            maxHealth: 70,
+            defense: 0,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Скелет",
+            code: "Skeleton",
+            speed: 12,
+            health: 20,
+            maxHealth: 20,
+            defense: 0,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Обычный',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Скелет коррозии",
+            code: "corrosionSkeleton",
+            speed: 4.35,
+            health: 150,
+            maxHealth: 150,
+            defense: 0,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Эпический',
+            description: "При атаке понижает защиту цели на 5%.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Королевский мушкетёр",
+            code: "royalMusketeer",
+            speed: 4.25,
+            health: 90,
+            maxHealth: 90,
+            defense: 5,
+            damage: 35,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Сверхредкий',
+            description: "Повышает урон мушкетёрам на 5 единиц.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Мушкетёр",
+            code: "musketeer",
+            speed: 5.55,
+            health: 75,
+            maxHealth: 75,
+            defense: 5,
+            damage: 30,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Необычный',
+            description: "Статичный урон",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Лансер",
+            code: "lancer",
+            speed: 8.1,
+            health: 70,
+            maxHealth: 70,
+            defense: 10,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Эпический',
+            description: "В начале боя атакует самым первым.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Кирасир",
+            code: "cuirassier",
+            speed: 4.15,
+            health: 100,
+            maxHealth: 100,
+            defense: 15,
+            damage: 30,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Эпический',
+            description: "До начала своего хода имеет 90% защиту.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Начальник стражи",
+            code: "guardCaptain",
+            speed: 5,
+            health: 90,
+            maxHealth: 90,
+            defense: 25,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Мифический',
+            description: "При вступлении в бой увеличивает защиту своих союзников на 10%.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Рыцарь",
+            code: "knight",
+            speed: 6,
+            health: 110,
+            maxHealth: 110,
+            defense: 20,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Редкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Дубинщик",
+            code: "clubman",
+            speed: 5.45,
+            health: 85,
+            maxHealth: 85,
+            defense: 5,
+            damage: 30,
+            penetration: 50,
+            element: 'Нейтральный',
+            damagetype: 'Пробивной урон',
+            rarity: 'Редкий',
+            description: "Атака пробивает 50% защиты противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Гвардеец",
+            code: "guardian",
+            speed: 5.15,
+            health: 95,
+            maxHealth: 95,
+            defense: 10,
+            damage: 30,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Редкий',
+            description: "До начала своего хода имеет 50% защиту.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Алебардист",
+            code: "halberdier",
+            speed: 4,
+            health: 110,
+            maxHealth: 110,
+            defense: 15,
+            damage: 40,
+            penetration: 60,
+            element: 'Нейтральный',
+            damagetype: 'Пробивной урон',
+            rarity: 'Эпический',
+            description: "Атака пробивает 50% защиты противника. До начала своего хода имеет 65% защиту.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Кавалерград",
+            code: "cavalierGuard",
+            speed: 7.5,
+            health: 100,
+            maxHealth: 100,
+            defense: 20,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Легендарный',
+            description: "В начале боя передний фронт атакует первым.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Ученик мага",
+            code: "mageStudent",
+            speed: 7.85,
+            health: 60,
+            maxHealth: 60,
+            defense: 0,
+            damage: 15,
+            element: 'Нейтральный',
+            damagetype: 'Магический урон',
+            rarity: 'Необычный',
+            description: "Атаки игнорируют защиту противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Шаман",
+            code: "Shaman",
+            speed: 6.65,
+            health: 75,
+            maxHealth: 75,
+            defense: 0,
+            damage: 20,
+            element: 'Нейтральный',
+            damagetype: 'Магический урон',
+            rarity: 'Сверхредкий',
+            description: "Атаки игнорируют защиту противника и восстанавливает 15 здоровья.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Старейшина",
+            code: "Elder",
+            speed: 6,
+            health: 100,
+            maxHealth: 100,
+            defense: 5,
+            damage: 25,
+            element: 'Нейтральный',
+            damagetype: 'Магический урон',
+            rarity: 'Эпический',
+            description: "Атаки игнорируют защиту противника и могут вызвать одно из усилений: +50% урона, проклятье защиты на 5 ед. или лечение на 25 ед.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Волшебник",
+            code: "wizard",
+            speed: 6.33,
+            health: 80,
+            maxHealth: 80,
+            defense: 0,
+            damage: 30,
+            element: 'Нейтральный',
+            damagetype: 'Магический урон',
+            rarity: 'Сверхредкий',
+            description: "Атаки игнорируют защиту противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Паломник",
+            code: "pilgrim",
+            speed: 7.5,
+            health: 60,
+            maxHealth: 60,
+            defense: 0,
+            damage: 5,
+            element: 'Нейтральный',
+            damagetype: 'Проклятье защиты',
+            rarity: 'Обычный',
+            description: "Понижает защиту противника.",
+            level: 1,
+            canBeCrafted: true,
+        },
+        {
+            name: "Экзорцист",
+            code: "exorcist",
+            speed: 6,
+            health: 75,
+            maxHealth: 75,
+            defense: 0,
+            damage: 20,
+            damageMultiplier: 2,
+            element: 'Нейтральный',
+            damagetype: 'Магический урон',
+            rarity: 'Эпический',
+            description: "Атаки игнорируют защиту противника и наносит в два раза больше урона нежити.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Монах",
+            code: "monk",
+            speed: 6.63,
+            health: 65,
+            maxHealth: 65,
+            defense: 5,
+            damage: 10,
+            element: 'Нейтральный',
+            damagetype: 'Проклятье защиты',
+            rarity: 'Необычный',
+            description: "Понижает защиту противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Оруженосец",
+            code: "swordsman",
+            speed: 5.25,
+            health: 120,
+            maxHealth: 120,
+            defense: 20,
+            damage: 35,
+            element: 'Нейтральный',
+            damagetype: 'Урон',
+            rarity: 'Сверхредкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Наёмник с булавой",
+            code: "maceMercenary",
+            speed: 4.75,
+            health: 80,
+            maxHealth: 80,
+            defense: 0,
+            damage: 50,
+            penetration: 75,
+            element: 'Нейтральный',
+            damagetype: 'Пробивной урон',
+            rarity: 'Сверхредкий',
+            description: "Атаки пробивают 75% защиты противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Молотоборец",
+            code: "hammerman",
+            speed: 3.75,
+            health: 100,
+            maxHealth: 100,
+            defense: 10,
+            damage: 60,
+            penetration: 100,
+            element: 'Нейтральный',
+            damagetype: 'Пробивной урон',
+            rarity: 'Эпический',
+            description: "Атаки пробивают 100% защиты противника.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Конный арбалетчик",
+            code: "horseCrossbowman",
+            speed: 5.85,
+            health: 110,
+            maxHealth: 110,
+            defense: 10,
+            damage: 40,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Сверхредкий',
+            description: "В начале боя ходит первым.",
+            level: 1,
+            canBeCrafted: false,
+        },
+        {
+            name: "Стрелок гарнизона",
+            code: "garrisonShooter",
+            speed: 6.85,
+            health: 90,
+            maxHealth: 90,
+            defense: 10,
+            damage: 27,
+            element: 'Нейтральный',
+            damagetype: 'Стрелковый урон',
+            rarity: 'Редкий',
+            description: "Статичный урон.",
+            level: 1,
+            canBeCrafted: false,
+        },
+    ];
+
+const items = [
+    { name: "Трава скорости", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Необычная вода", rarity: "Необычный", type: "drop", location: "divine" },
+    { name: "Магическая вода", rarity: "Сверхредкий", type: "drop", location: "divine" },
+    { name: "Корень силы", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Груда земли", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Гены Гулливера", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Железный слиток", rarity: "Необычный", type: "craftable", location: "all" },
+    { name: "Железная руда", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Древесина", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Боевые записи", rarity: "Необычный", type: "drop", location: "all" },
+    { name: "Аккумулятор", rarity: "Редкий", type: "drop", location: "factory" },
+    { name: "Чип робота", rarity: "Сверхредкий", type: "drop", location: "factory" },
+    { name: "Эссенция молнии", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция огня", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция воды", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция земли", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция льда", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция воздуха", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Эссенция света", rarity: "Эпический", type: "drop", location: "all" },
+    { name: "Эссенция тьмы", rarity: "Эпический", type: "drop", location: "all" },
+    { name: "Бронепластины", rarity: "Редкий", type: "craftable", location: "all" },
+    { name: "Зелье скорости", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Зелье силы", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Зелье замедления", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Вера", rarity: "Мифический", type: "drop", location: "all" },
+    { name: "Зелье гигантизма", rarity: "Редкий", type: "drop", location: "divine" },
+    { name: "Титановый слиток", rarity: "Редкий", type: "craftable", location: "divine" },
+    { name: "Титановая руда", rarity: "Необычный", type: "drop", location: "all" },
+    { name: "Лазерные батареи", rarity: "Сверхредкий", type: "craftable", location: "factory" },
+    { name: "Чип ИИ", rarity: "Эпический", type: "drop", location: "factory" },
+    { name: "Зараженная кровь", rarity: "Редкий", type: "drop", location: "cemetery" },
+    { name: "Зелье бешенства", rarity: "Эпический", type: "drop", location: "divine" },
+    { name: "Проклятье", rarity: "Мифический", type: "drop", location: "all" },
+    { name: "Обсидиановый слиток", rarity: "Эпический", type: "craftable", location: "all" },
+    { name: "Обсидиан", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Боевые книги", rarity: "Редкий", type: "drop", location: "all" },
+    { name: "Монеты", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Лазерный слиток", rarity: "Сверхредкий", type: "craftable", location: "factory" },
+    { name: "Лазерная руда", rarity: "Редкий", type: "drop", location: "factory" },
+    { name: "Алмазная батарея", rarity: "Эпический", type: "craftable", location: "all" },
+    { name: "Алмаз", rarity: "Редкий", type: "drop", location: "all" },
+    { name: "Уран", rarity: "Эпический", type: "drop", location: "all" },
+    { name: "Чип суперинтеллекта", rarity: "Мифический", type: "drop", location: "factory" },
+    { name: "Зелье ярости", rarity: "Эпический", type: "drop", location: "divine" },
+    { name: "Суперметаллический слиток", rarity: "Эпический", type: "craftable", location: "all" },
+    { name: "Боевые медали", rarity: "Эпический", type: "drop", location: "all" },
+    { name: "Конь", rarity: "Эпический", type: "drop", location: "all" },
+    { name: "Флаг поддержки", rarity: "Легендарный", type: "drop", location: "all" },
+    { name: "Универсальный сплав", rarity: "Мифический", type: "craftable", location: "all" },
+    { name: "Меч защиты", rarity: "Легендарный", type: "craftable", location: "all" },
+    { name: "Абсолютовая броня", rarity: "Легендарный", type: "craftable", location: "all" },
+    { name: "Посох пустоты", rarity: "Легендарный", type: "drop", location: "void" },
+    { name: "Неизвестный слиток", rarity: "Легендарный", type: "craftable" },
+    { name: "Неизвестная руда", rarity: "Мифический", type: "drop", location: "void" },
+    { name: "Клинок пронзающий тьму", rarity: "Легендарный", type: "drop", location: "darkness" },
+    { name: "Благословение ангелов", rarity: "Легендарный", type: "drop", location: "divine" },
+    { name: "Боевая аура", rarity: "Мифический", type: "drop", location: "all" },
+    { name: "ПротокØл уничтØжения", rarity: "Легендарный", type: "drop", location: "factory" },
+    { name: "Аптечка", rarity: "Сверхредкий", type: "drop", location: "all" },
+    { name: "Кусок ткани", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Кусок кожи", rarity: "Необычный", type: "drop", location: "all" },
+    { name: "Верёвка", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Лук", rarity: "Необычный", type: "craftable" },
+    { name: "Вилы", rarity: "Необычный", type: "craftable" },
+    { name: "Меч", rarity: "Необычный", type: "craftable" },
+    { name: "Камень", rarity: "Обычный", type: "drop", location: "all" },
+    { name: "Копьё", rarity: "Необычный", type: "craftable" },
+    { name: "Топор", rarity: "Необычный", type: "craftable" },
+    { name: "Лёгкие доспехи", rarity: "Редкий", type: "craftable" },
+    { name: "Щит", rarity: "Редкий", type: "craftable" },
+    { name: "Накидка", rarity: "Редкий", type: "craftable" },
+    { name: "Стальной слиток", rarity: "Редкий", type: "craftable" },
+    { name: "Стальная руда", rarity: "Необычный", type: "drop", location: "all" },
+    { name: "Обсидиановый клинок", rarity: "Мифический", type: "craftable" },
+    { name: "Переносная пушка", rarity: "Эпический", type: "craftable" },
+    { name: "Плотные доспехи", rarity: "Эпический", type: "craftable" },
+    { name: "Клинок жажды крови", rarity: "Мифический", type: "craftable" },
+    { name: "Копьё элитного гвардейца", rarity: "Мифический", type: "craftable" },
+    { name: "Душа мести", rarity: "Мифический", type: "drop", location: "darkness" },
+    { name: "Меч падшего короля", rarity: "Мифический", type: "craftable" },
+    { name: "Инопланетный слиток", rarity: "Мифический", type: "craftable" },
+    { name: "Инопланетная руда", rarity: "Эпический", type: "drop", location: "factory" },
+    { name: "Аура защиты", rarity: "Мифический", type: "drop", location: "all" },
+    { name: "Абсолютовая руда", rarity: "Эпический", type: "drop", location: "divine" },
+    { name: "Абсолютовый слиток", rarity: "Мифический", type: "craftable", location: "divine" },
+    { name: "Неживой сосуд", rarity: "Эпический", type: "craftable" },
+    { name: "Эссенция стихий", rarity: "Эпический", type: "craftable" },
+    { name: "Эссенция баланса", rarity: "Эпический", type: "craftable" },
+    { name: "Бомбарда", rarity: "Мифический", type: "craftable" },
+    { name: "Плащ", rarity: "Необычный", type: "craftable" },
+    { name: "Булава", rarity: "Редкий", type: "craftable" },
+    { name: "Стальной клинок", rarity: "Сверхредкий", type: "craftable" },
+    { name: "Клинок", rarity: "Необычный", type: "craftable" },
+    { name: "Мушкет", rarity: "Необычный", type: "craftable" },
+    { name: "Палаш", rarity: "Эпический", type: "craftable" },
+    { name: "Кольцо вора", rarity: "Эпический", type: "drop", location: "thieves"},
+    { name: "Кости", rarity: "Обычный", type: "drop", location: "cemetery" },
+    { name: "Зелье коррозии", rarity: "Эпический", location: "factory"},
+    { name: "Элитные рыцарские латы", rarity: "Мифический", type: "craftable" },
+    { name: "Алебарда", rarity: "Эпический", type: "craftable" },
+    { name: "Доспехи", rarity: "Сверхредкий", type: "craftable" },
+    { name: "Стальной меч", rarity: "Сверхредкий", type: "craftable" },
+    { name: "Книга изгнания демонов", rarity: "Мифический", type: "craftable" },
+    { name: "Посох", rarity: "Необычный", type: "craftable" },
+    { name: "Моргенштерн", rarity: "Необычный", type: "craftable" },
+    { name: "Мощный арбалет", rarity: "Сверхредкий", type: "craftable" },
+    { name: "Мощный лук", rarity: "Редкий", type: "craftable" },
+    { name: "Посох мага", rarity: "Редкий", type: "craftable" },
+];
+
+const allCharacters = characters.map(character => ({
+    name: character.name,
+    rarity: character.rarity,
+    canBeCrafted: character.canBeCrafted 
+}));
+
+    allCharacters.sort((a, b) => getRarityOrder(a.rarity) - getRarityOrder(b.rarity));
+
+    let craftingRecipes = {
+    "Крестьянин": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Вилы", rarity: "Необычный", quantity: 1 }
+    ],
+    "Охотник": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Лук", rarity: "Необычный", quantity: 1 },
+        { name: "Боевые записи", rarity: "Необычный", quantity: 2 }
+    ],
+    "Пехотинец": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Копьё", rarity: "Необычный", quantity: 1 },
+        { name: "Боевые записи", rarity: "Необычный", quantity: 2 }
+    ],
+    "Дроворуб": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Топор", rarity: "Необычный", quantity: 1 },
+    ],
+    "Скоростник": [
+        { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Зелье скорости", rarity: "Редкий", quantity: 2 },
+        { name: "Железный слиток", rarity: "Необычный", quantity: 5 }
+    ],
+    "Медлитель": [
+        { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Зелье замедления", rarity: "Редкий", quantity: 2 },
+        { name: "Железный слиток", rarity: "Необычный", quantity: 5 }
+    ],
+    "Тетрадрон": [
+        { name: "Кибернетический сосуд", rarity: "Эпический", quantity: 2 },
+        { name: "Железный слиток", rarity: "Необычный", quantity: 5 },
+        { name: "Аккумулятор", rarity: "Редкий", quantity: 3 },
+        { name: "Чип робота", rarity: "Сверхредкий", quantity: 1 }
+    ],
+    "Зомби Хищник": [
+        { name: "Неживой сосуд", rarity: "Эпический", quantity: 4 },
+        { name: "Зараженная кровь", rarity: "Сверхредкий", quantity: 15 },
+        { name: "Зелье бешенства", rarity: "Эпический", quantity: 3 },
+    ],
+    "Рыцарь крови": [
+        { name: "Воин", rarity: "Необычный", quantity: 2 },
+        { name: "Эссенция тьмы", rarity: "Эпический", quantity: 5 },
+        { name: "Зараженная кровь", rarity: "Сверхредкий", quantity: 10 },
+    ],
+    "Убийца": [
+        { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 6 },
+        { name: "Эссенция тьмы", rarity: "Эпический", quantity: 5 },
+        { name: "Обсидиановый клинок", rarity: "Мифический", quantity: 1 },
+        { name: "Накидка", rarity: "Редкий", quantity: 3 },
+    ],
+    "Пушкарь": [
+        { name: "Лучник", rarity: "Обычный", quantity: 5 },
+        { name: "Переносная пушка", rarity: "Эпический", quantity: 1 },
+        { name: "Боевые книги", rarity: "Редкий", quantity: 20 },
+    ],
+    "Щитоносец": [
+        { name: "Пехотинец", rarity: "Обычный", quantity: 5 },
+        { name: "Щит", rarity: "Редкий", quantity: 5 },
+        { name: "Боевые книги", rarity: "Редкий", quantity: 5 },
+    ],
+    "Железный скелет": [
+        { name: "Скелет рыцарь", rarity: "Необычный", quantity: 3 },
+        { name: "Неживой сосуд", rarity: "Эпический", quantity: 2 },
+        { name: "Плотные доспехи", rarity: "Эпический", quantity: 1 },
+    ],
+    "Везунчик": [
+        { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 6 },
+        { name: "Монеты", rarity: "Обычный", quantity: 150 },
+        { name: "Железный слиток", rarity: "Необычный", quantity: 25 },
+    ],
+    "Король скелетов": [
+        { name: "Скелет рыцарь", rarity: "Необычный", quantity: 5 },
+        { name: "Неживой сосуд", rarity: "Эпический", quantity: 5 },
+        { name: "Меч падшего короля", rarity: "Мифический", quantity: 1 },
+        { name: "Эссенция тьмы", rarity: "Эпический", quantity: 5 },
+    ],
+    "Боевой лекарь": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10 },
+        { name: "Боевые медали", rarity: "Эпический", quantity: 10 },
+        { name: "Аптечка", rarity: "Сверхредкий", quantity: 25 },
+    ],
+    "Герой": [
+        { name: "Геройский сосуд", rarity: "Легендарный", quantity: 1 },
+        { name: "Вера", rarity: "Мифический", quantity: 5 },
+        { name: "Эссенция света", rarity: "Эпический", quantity: 25 },
+        { name: "Клинок пронзающий тьму", rarity: "Легендарный", quantity: 1 },
+        { name: "Благословение ангелов", rarity: "Легендарный", quantity: 1 },
+    ],
+    "Флагоносец": [
+        { name: "Геройский сосуд", rarity: "Легендарный", quantity: 1 },
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10 },
+        { name: "Боевая аура", rarity: "Мифический", quantity: 5 },
+        { name: "Флаг поддержки", rarity: "Легендарный", quantity: 1 },
+        { name: "Универсальный сплав", rarity: "Мифический", quantity: 3 },
+    ],
+    "Владыка пустоты": [
+        { name: "Пустотный сосуд", rarity: "Легендарный", quantity: 1 },
+        { name: "Проклятье", rarity: "Мифический", quantity: 5 },
+        { name: "Посох пустоты", rarity: "Легендарный", quantity: 1 },
+        { name: "Неизвестный слиток", rarity: "Легендарный", quantity: 2 },
+    ],
+    // "Грабитель": [
+    //     { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+    //     { name: "Клинок", rarity: "Необычный", quantity: 2 },
+    // ],
+    "Бандит": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Клинок", rarity: "Необычный", quantity: 2 },
+    ],
+    "Скелет": [
+        { name: "Неживой сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Кости", rarity: "Обычный", quantity: 10 },
+    ],
+    "Скелет коррозии": [
+        { name: "Неживой сосуд", rarity: "Эпический", quantity: 6 },
+        { name: "Кости", rarity: "Обычный", quantity: 35 },
+        { name: "Зелье коррозии", rarity: "Эпический", quantity: 2 },
+        { name: "Меч", rarity: "Необычный", quantity: 3 },
+    ],
+    "Лансер": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 5 },
+        { name: "Копьё элитного гвардейца", rarity: "Мифический", quantity: 1 },
+        { name: "Лёгкие доспехи", rarity: "Редкий", quantity: 3 },
+        { name: "Конь", rarity: "Эпический", quantity: 1 },
+    ],
+    "Паломник": [
+        { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1 },
+        { name: "Плащ", rarity: "Необычный", quantity: 1 },
+        { name: "Посох", rarity: "Необычный", quantity: 1 },
+    ],
+    };
+
+        // Пример рецептов для предметов
+    const itemCraftingRecipes = {
+        "Железный слиток": [
+            { name: "Железная руда", rarity: "Обычный", quantity: 3 },
+        ],
+        "Бронепластины": [
+            { name: "Железный слиток", rarity: "Необычный", quantity: 1 },
+            { name: "Титановый слиток", rarity: "Обычный", quantity: 1 }
+        ],
+        "Эссенция баланса": [
+            { name: "Эссенция света", rarity: "Эпический", quantity: 1 },
+            { name: "Эссенция тьмы", rarity: "Эпический", quantity: 1 }
+        ],
+        "Эссенция стихий": [
+            { name: "Эссенция молнии", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Эссенция огня", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Эссенция воды", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Эссенция земли", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Эссенция льда", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Эссенция воздуха", rarity: "Сверхредкий", quantity: 1 },
+        ],
+        "Титановый слиток": [
+            { name: "Титановая руда", rarity: "Необычный", quantity: 3 },
+        ],
+        "Лазерный слиток": [
+            { name: "Лазерная руда", rarity: "Редкий", quantity: 3 },
+        ],
+        "Зелье скорости": [
+            { name: "Необычная вода", rarity: "Необычный", quantity: 1 },
+            { name: "Трава скорости", rarity: "Редкий", quantity: 1 },
+        ],
+        "Зелье силы": [
+            { name: "Необычная вода", rarity: "Необычный", quantity: 1 },
+            { name: "Корень силы", rarity: "Редкий", quantity: 1 },
+        ],
+        "Зелье замедления": [
+            { name: "Необычная вода", rarity: "Необычный", quantity: 1 },
+            { name: "Груда земли", rarity: "Редкий", quantity: 1 },
+        ],
+        "Зелье гигантизма": [
+            { name: "Необычная вода", rarity: "Необычный", quantity: 1 },
+            { name: "Гены Гулливера", rarity: "Редкий", quantity: 1 },
+        ],
+        "Лазерные батареи": [
+            { name: "Лазерный слиток", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Аккумулятор", rarity: "Редкий", quantity: 1 },
+        ],
+        "Зелье бешенства": [
+            { name: "Магическая вода", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Зелье силы", rarity: "Редкий", quantity: 1 },
+            { name: "Зараженная кровь", rarity: "Редкий", quantity: 3 },
+        ],
+        "Обсидиановый слиток": [
+            { name: "Обсидиан", rarity: "Сверхредкий", quantity: 3 },
+        ],
+        "Алмазная батарея": [
+            { name: "Алмаз", rarity: "Сверхредкий", quantity: 2 },
+            { name: "Уран", rarity: "Эпический", quantity: 1 },
+        ],
+        "Зелье ярости": [
+            { name: "Магическая вода", rarity: "Сверхредкий", quantity: 1 },
+            { name: "Корень силы", rarity: "Редкий", quantity: 3 },
+        ],
+        "Суперметаллический слиток": [
+            { name: "Железная руда", rarity: "Обычный", quantity: 5 },
+            { name: "Титановая руда", rarity: "Необычный", quantity: 5 },
+            { name: "Стальная руда", rarity: "Необычный", quantity: 5 },
+            { name: "Лазерная руда", rarity: "Редкий", quantity: 3 },
+        ],
+        "Универсальный сплав": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 2 },
+            { name: "Инопланетная руда", rarity: "Эпический", quantity: 3 },
+            // { name: "Абсолютовая руда", rarity: "Эпический", quantity: 3 },
+            // { name: "Звездная руда", rarity: "Эпический", quantity: 3 },
+        ],
+        "Меч защиты": [
+            { name: "Универсальный сплав", rarity: "Мифический", quantity: 2 },
+            { name: "Аура защиты", rarity: "Мифический", quantity: 1 },
+            { name: "Древесина", rarity: "Обычный", quantity: 50 },
+            { name: "Эссенция света", rarity: "Эпический", quantity: 10 },
+        ],
+        "Абсолютовый слиток": [
+            { name: "Абсолютовая руда", rarity: "Эпический", quantity: 3 },
+        ],
+        "Инопланетный слиток": [
+            { name: "Инопланетная руда", rarity: "Эпический", quantity: 3 },
+        ],
+        "Абсолютовая броня": [
+            { name: "Абсолютовый слиток", rarity: "Мифический", quantity: 4 },
+            { name: "Универсальный сплав", rarity: "Мифический", quantity: 1 },
+        ],
+        "Лук": [
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+            { name: "Верёвка", rarity: "Обычный", quantity: 3 },
+        ],
+        "Вилы": [
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 1 },
+        ],
+        "Копьё": [
+            { name: "Древесина", rarity: "Обычный", quantity: 15 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 1 },
+        ],
+        "Топор": [
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 2 },
+        ],
+        "Меч": [
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 3 },
+        ],
+        "Щит": [
+            { name: "Древесина", rarity: "Обычный", quantity: 20 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 5 },
+        ],
+        "Лёгкие доспехи": [
+            { name: "Железный слиток", rarity: "Необычный", quantity: 5 },
+        ],
+        "Накидка": [
+            { name: "Кусок ткани", rarity: "Обычный", quantity: 15 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 3 },
+        ],
+        "Стальной слиток": [
+            { name: "Стальная руда", rarity: "Необычный", quantity: 3 },
+        ],
+        "Обсидиановый клинок": [
+            { name: "Обсидиановый слиток", rarity: "Эпический", quantity: 3 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 2 },
+        ],
+        "Переносная пушка": [
+            { name: "Железный слиток", rarity: "Необычный", quantity: 15 },
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 5 },
+        ],
+        "Бомбарда": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 5 },
+            { name: "Переносная пушка", rarity: "Эпический", quantity: 1 },
+        ],
+        "Плотные доспехи": [
+            { name: "Стальной слиток", rarity: "Редкий", quantity: 7 },
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 7 },
+        ],
+        "Клинок жажды крови": [
+            { name: "Обсидиановый клинок", rarity: "Эпический", quantity: 1 },
+            { name: "Зараженная кровь", rarity: "Редкий", quantity: 10 },
+        ],
+        "Копьё элитного гвардейца": [
+            { name: "Древесина", rarity: "Обычный", quantity: 20 },
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 5 },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 3 },
+        ],
+        "Меч падшего короля": [
+            { name: "Неживой сосуд", rarity: "Эпический", quantity: 1 },
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 15 },
+            { name: "Проклятье", rarity: "Мифический", quantity: 1 },
+        ],
+        "Неизвестный слиток": [
+            { name: "Неизвестная руда", rarity: "Мифический", quantity: 2 },
+        ],
+        "Плащ": [
+            { name: "Кусок ткани", rarity: "Обычный", quantity: 3 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 1 },
+        ],
+        "Булава": [
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 2 },
+            { name: "Древесина", rarity: "Обычный", quantity: 5 },
+        ],
+        "Стальной клинок": [
+            { name: "Стальной слиток", rarity: "Редкий", quantity: 2 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 2 },
+            { name: "Древесина", rarity: "Обычный", quantity: 5 },
+        ],
+        "Клинок": [
+            { name: "Железный слиток", rarity: "Необычный", quantity: 1 },
+            { name: "Древесина", rarity: "Обычный", quantity: 1 },
+        ],
+        "Мушкет": [
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 1 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 1 },
+        ],
+        "Палаш": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 2 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 1 },
+            { name: "Древесина", rarity: "Обычный", quantity: 3 },
+        ],
+        "Элитные рыцарские латы": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 6 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 10 },
+        ],
+        "Алебарда": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 1 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 2 },
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+        ],
+        "Стальной меч": [
+            { name: "Стальной слиток", rarity: "Редкий", quantity: 3 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 3 },
+            { name: "Древесина", rarity: "Обычный", quantity: 7 },
+        ],
+        "Книга изгнания демонов": [
+            { name: "Боевые книги", rarity: "Редкий", quantity: 5 },
+            { name: "Вера", rarity: "Мифический", quantity: 1 },
+            { name: "Проклятье", rarity: "Мифический", quantity: 1 },
+        ],
+        "Посох": [
+            { name: "Древесина", rarity: "Обычный", quantity: 10 },
+        ],
+        "Посох мага": [
+            { name: "Посох", rarity: "Необычный", quantity: 1 },
+            { name: "Эссенция воды", rarity: "Сверхредкий", quantity: 1 },
+        ],
+        "Моргенштерн": [
+            { name: "Суперметаллический слиток", rarity: "Эпический", quantity: 2 },
+            { name: "Железный слиток", rarity: "Необычный", quantity: 3 },
+        ],
+        "Мощный арбалет": [
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 5 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 3 },
+            { name: "Верёвка", rarity: "Обычный", quantity: 10 },
+        ],
+        "Мощный лук": [
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 3 },
+            { name: "Кусок кожи", rarity: "Необычный", quantity: 2 },
+            { name: "Верёвка", rarity: "Обычный", quantity: 7 },
+        ],
+    };
+
+    const sortedItemCraftingRecipes = Object.entries(itemCraftingRecipes).sort(([itemNameA], [itemNameB]) => {
+        const rarityA = items.find(item => item.name === itemNameA)?.rarity || "Обычный";
+        const rarityB = items.find(item => item.name === itemNameB)?.rarity || "Обычный";
+        return getRarityOrder(rarityA) - getRarityOrder(rarityB);
+    })
+    .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+    }, {});
+
+    const campaignLevels = [
+    [ //1
+        { name: "Крестьянин", level: 2 },
+    ],
+    [ //2
+        { name: "Крестьянин", level: 1 },
+        { name: "Крестьянин", level: 1 },
+    ],
+    [ //3
+        { name: "Пехотинец", level: 2 },
+    ],
+    [ //4
+        { name: "Охотник", level: 2 },
+    ],
+    [ //5
+        { name: "Пехотинец", level: 1 },
+        { name: "Охотник", level: 1 },
+        { name: "Охотник", level: 1 }
+    ],
+    [ //6
+        { name: "Пехотинец", level: 1 },
+        { name: "Пехотинец", level: 1 },
+        { name: "Арбалетчик", level: 1 },
+    ],
+    [ //7
+        { name: "Крестьянин", level: 2 },
+        { name: "Крестьянин", level: 2 },
+        { name: "Крестьянин", level: 2 },
+    ],
+    [ //8
+        { name: "Крестьянин", level: 1 },
+        { name: "Крестьянин", level: 1 },
+        { name: "Крестьянин", level: 1 },
+        { name: "Охотник", level: 1 },
+    ],
+    [ //9
+        { name: "Охотник", level: 2 },
+        { name: "Воин", level: 1 },
+        { name: "Воин", level: 1 },
+    ],
+    [ //10
+        { name: "Арбалетчик", level: 1 },
+        { name: "Арбалетчик", level: 2 },
+        { name: "Воин", level: 2 },
+    ],
+    [ //11
+        { name: "Охотник", level: 1 },
+        { name: "Охотник", level: 1 },
+        { name: "Воин", level: 1 },
+        { name: "Воин", level: 2 },
+    ],
+    [ //12
+        { name: "Арбалетчик", level: 7 },
+        { name: "Воин", level: 7 },
+    ],
+    [ //13
+        { name: "Лучник", level: 2 },
+        { name: "Лучник", level: 4 },
+        { name: "Воин", level: 2 },
+    ],
+    [ //14
+        { name: "Дроворуб", level: 2 },
+        { name: "Дроворуб", level: 5 },
+        { name: "Дроворуб", level: 2 },
+    ],
+    [ //15
+        { name: "Лучник", level: 2 },
+        { name: "Лучник", level: 3 },
+        { name: "Дроворуб", level: 3 },
+        { name: "Дроворуб", level: 2 },
+    ],
+    [ //16
+        { name: "Арбалетчик", level: 3 },
+        { name: "Лучник", level: 3 },
+        { name: "Пехотинец", level: 3 },
+        { name: "Воин", level: 3 },
+    ],
+    [ //17
+        { name: "Крестьянин", level: 15 },
+        { name: "Охотник", level: 5 },
+    ],
+    [ //18
+        { name: "Пехотинец", level: 10 },
+        { name: "Лучник", level: 10 },
+    ],
+    [ //19
+        { name: "Лучник", level: 8 },
+        { name: "Дроворуб", level: 8 },
+    ],
+    [ //20
+        { name: "Маг", level: 20 },
+    ],
+    ];
+
+    const ASCENSIONS = {
+    "Охотник": {
+        "Лучник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Лук", rarity: "Необычный", quantity: 2, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 1, type: "item" },
+            { level: 2 }
+        ],
+        "Арбалетчик": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Лук", rarity: "Необычный", quantity: 2, type: "item" },
+            { name: "Боевые книги", rarity: "Редкий", quantity: 1, type: "item" },
+            { level: 2 }
+        ],
+        "Мушкетёр": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Мушкет", rarity: "Необычный", quantity: 1, type: "item" },
+            { name: "Боевые записи", rarity: "Необычный", quantity: 4, type: "item" },
+            { level: 2 }
+        ],
+    },
+    "Пехотинец": {
+        "Воин": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Боевые записи", rarity: "Необычный", quantity: 4, type: "item" },
+            { name: "Меч", rarity: "Необычный", quantity: 1, type: "item" },
+            { level: 2 } // Требуемый уровень
+        ],
+    },
+    "Бандит": {
+        "Разбойник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Плащ", rarity: "Необычный", quantity: 2, type: "item" },
+            { name: "Меч", rarity: "Необычный", quantity: 2, type: "item" },
+            { level: 2 } // Требуемый уровень
+        ],
+    },
+    "Скелет": {
+        "Скелет рыцарь": [
+            { name: "Неживой сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Лёгкие доспехи", rarity: "Редкий", quantity: 1, type: "item" },
+            { name: "Меч", rarity: "Необычный", quantity: 1, type: "item" },
+            { level: 2 } // Требуемый уровень
+        ],
+    },
+    "Скоростник": {
+        "Молниеносец": [
+            { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Зелье скорости", rarity: "Редкий", quantity: 3, type: "item" },
+            { name: "Эссенция молнии", rarity: "Сверхредкий", quantity: 1, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+    },
+    "Медлитель": {
+        "Танк": [
+            { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Зелье замедления", rarity: "Редкий", quantity: 2, type: "item" },
+            { name: "Бронепластины", rarity: "Редкий", quantity: 4, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+    },
+    "Воин": {
+        "Рыцарь": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Доспехи", rarity: "Сверхредкий", quantity: 1, type: "item" },
+            { name: "Стальной меч", rarity: "Сверхредкий", quantity: 1, type: "item" },
+            { name: "Щит", rarity: "Редкий", quantity: 1, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+        "Дубинщик": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Булава", rarity: "Редкий", quantity: 3, type: "item" },
+            { name: "Боевые книги", rarity: "Редкий", quantity: 3, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+        "Гвардеец": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Копьё", rarity: "Необычный", quantity: 5, type: "item" },
+            { name: "Щит", rarity: "Редкий", quantity: 2, type: "item" },
+            { name: "Боевые книги", rarity: "Редкий", quantity: 2, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+    },
+    "Разбойник": {
+        "Мародёр": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Стальной клинок", rarity: "Сверхредкий", quantity: 1, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 2, type: "item" },
+            { level: 4 } // Требуемый уровень
+        ],
+    },
+    "Мушкетёр": {
+        "Королевский мушкетёр": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 6, type: "item" },
+            { name: "Мушкет", rarity: "Необычный", quantity: 5, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 3, type: "item" },
+            { level: 7 } // Требуемый уровень
+        ],
+    },
+    "Танк": {
+        "Громила": [
+            { name: "Нечеловеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Зелье гигантизма", rarity: "Редкий", quantity: 6, type: "item" },
+            { name: "Зелье силы", rarity: "Редкий", quantity: 6, type: "item" },
+            { name: "Бронепластины", rarity: "Редкий", quantity: 7, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Тетрадрон": {
+        "Гексадрон": [
+            { name: "Кибернетический сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Титановый слиток", rarity: "Редкий", quantity: 5, type: "item" },
+            { name: "Лазерные батареи", rarity: "Сверхредкий", quantity: 2, type: "item" },
+            { name: "Чип ИИ", rarity: "Эпический", quantity: 2, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Мародёр": {
+        "Главарь банды": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Стальной клинок", rarity: "Редкий", quantity: 8, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 6, type: "item" },
+            { name: "Кольцо вора", rarity: "Эпический", quantity: 1, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Гексадрон": {
+        "Супердрон": [
+            { name: "Кибернетический сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Лазерный слиток", rarity: "Сверхредкий", quantity: 8, type: "item" },
+            { name: "Алмазная батарея", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Чип суперинтеллекта", rarity: "Мифический", quantity: 1, type: "item" },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Священник": {
+        "Божественный священник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 17, type: "item" },
+            { name: "Вера", rarity: "Мифический", quantity: 3, type: "item" },
+            { name: "Эссенция света", rarity: "Эпический", quantity: 15, type: "item" },
+            { level: 11 } // Требуемый уровень
+        ],
+        "Экзорцист": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 7, type: "item" },
+            { name: "Книга изгнания демонов", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Эссенция света", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Вера", rarity: "Мифический", quantity: 1, type: "item" },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Проклятый священник": {
+        "Падший священник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 17, type: "item" },
+            { name: "Проклятье", rarity: "Мифический", quantity: 3, type: "item" },
+            { name: "Эссенция тьмы", rarity: "Эпический", quantity: 15, type: "item" },
+            { level: 11 } // Требуемый уровень
+        ],
+    },
+    "Убийца": {
+        "Берсерк": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10, type: "item" },
+            { name: "Зелье ярости", rarity: "Эпический", quantity: 3, type: "item" },
+            { name: "Зелье бешенства", rarity: "Эпический", quantity: 3, type: "item" },
+            { name: "Клинок жажды крови", rarity: "Мифический", quantity: 2, type: "item" },
+            { level: 10 } // Требуемый уровень
+        ],
+    },
+    "Пушкарь": {
+        "Бомбардир": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10, type: "item" },
+            { name: "Переносная пушка", rarity: "Эпический", quantity: 3, type: "item" },
+            { name: "Бомбарда", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 6, type: "item" },
+            { level: 10 } // Требуемый уровень
+        ],
+    },
+    "Супердрон": {
+        "Ультрадрон": [
+            { name: "Кибернетический сосуд", rarity: "Эпический", quantity: 10, type: "item" },
+            { name: "Алмазные батареи", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Инопланетный слиток", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "ПротокØл уничтØжения", rarity: "Легендарный", quantity: 1, type: "item" },
+            { level: 10 } // Требуемый уровень
+        ],
+    },
+    "Лансер": {
+        "Кавалерист": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10, type: "item" },
+            { name: "Копьё элитного гвардейца", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Лёгкие доспехи", rarity: "Редкий", quantity: 15, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 6, type: "item" },
+            { name: "Конь", rarity: "Эпический", quantity: 3, type: "item" },
+            { level: 10 } // Требуемый уровень
+        ],
+    },
+    "Кирасир": {
+        "Паладин": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 25, type: "item" },
+            { name: "Геройский сосуд", rarity: "Легендарный", quantity: 1, type: "item" },
+            { name: "Боевая аура", rarity: "Мифический", quantity: 5, type: "item" },
+            { name: "Меч защиты", rarity: "Легендарный", quantity: 1, type: "item" },
+            { name: "Абсолютовая броня", rarity: "Легендарный", quantity: 1, type: "item" },
+            { level: 14 } // Требуемый уровень
+        ],
+    },
+    "Гвардеец": {
+        "Алебардист": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 7, type: "item" },
+            { name: "Алебарда", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 3, type: "item" },
+            { name: "Плотные доспехи", rarity: "Эпический", quantity: 2, type: "item" },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Алебардист": {
+        "Начальник стражи": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 10, type: "item" },
+            { name: "Копьё элитного гвардейца", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Элитные рыцарские латы", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Боевая аура", rarity: "Мифический", quantity: 2, type: "item" },
+            { level: 10 } // Требуемый уровень
+        ],
+    },
+    "Кавалерист": {
+        "Кавалерград": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 15, type: "item" },
+            { name: "Геройский сосуд", rarity: "Легендарный", quantity: 1, type: "item" },
+            { name: "Копьё элитного гвардейца", rarity: "Мифический", quantity: 3, type: "item" },
+            { name: "Элитные рыцарские латы", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Боевая аура", rarity: "Мифический", quantity: 3, type: "item" },
+            { level: 12 } // Требуемый уровень
+        ],
+    },
+    "Паломник": {
+        "Ученик мага": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Посох", rarity: "Необычный", quantity: 1, type: "item" },
+            { name: "Плащ", rarity: "Необычный", quantity: 3, type: "item" },
+            { level: 2 } // Требуемый уровень
+        ],
+        "Монах": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Плащ", rarity: "Необычный", quantity: 3, type: "item" },
+            { level: 2 } // Требуемый уровень
+        ],
+    },
+    "Ученик мага": {
+        "Маг": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Эссенция воды", rarity: "Редкий", quantity: 1, type: "item" },
+            { name: "Эссенция света", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 1 },
+            { level: 4 } // Требуемый уровень
+        ],
+    },
+    "Маг": {
+        "Шаман": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Эссенция стихий", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Эссенция земли", rarity: "Редкий", quantity: 3, type: "item" },
+            { name: "Посох мага", rarity: "Редкий", quantity: 2 },
+            { level: 6 } // Требуемый уровень
+        ],
+        "Волшебник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Эссенция баланса", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 5, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Шаман": {
+        "Старейшина": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 7, type: "item" },
+            { name: "Эссенция стихий", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Эссенция баланса", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Посох мага", rarity: "Редкий", quantity: 6 },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Монах": {
+        "Священник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 6, type: "item" },
+            { name: "Эссенция света", rarity: "Эпический", quantity: 5, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 1, type: "item" },
+            { level: 7 } // Требуемый уровень
+        ],
+        "Проклятый священник": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 6, type: "item" },
+            { name: "Эссенция тьмы", rarity: "Эпический", quantity: 5, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 1, type: "item" },
+            { level: 7 } // Требуемый уровень
+        ],
+    },
+    "Рыцарь": {
+        "Оруженосец": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Стальной меч", rarity: "Сверхредкий", quantity: 2, type: "item" },
+            { name: "Доспехи", rarity: "Сверхредкий", quantity: 2, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 3, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Оруженосец": {
+        "Кирасир": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 7, type: "item" },
+            { name: "Палаш", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Элитные рыцарские латы", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 5, type: "item" },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Дубинщик": {
+        "Наёмник с булавой": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Моргенштерн", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Накидка", rarity: "Редкий", quantity: 3, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 2, type: "item" },
+            { level: 6 } // Требуемый уровень
+        ],
+    },
+    "Наёмник с булавой": {
+        "Молотоборец": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 7, type: "item" },
+            { name: "Моргенштерн", rarity: "Эпический", quantity: 3, type: "item" },
+            { name: "Элитные рыцарские латы", rarity: "Мифический", quantity: 1, type: "item" },
+            { name: "Боевая аура", rarity: "Мифический", quantity: 1, type: "item" },
+            { level: 8 } // Требуемый уровень
+        ],
+    },
+    "Арбалетчик": {
+        "Конный арбалетчик": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 6, type: "item" },
+            { name: "Конь", rarity: "Эпический", quantity: 1, type: "item" },
+            { name: "Легкие доспехи", rarity: "Редкий", quantity: 2, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Мощный арбалет", rarity: "Сверхредкий", quantity: 2, type: "item" },
+            { level: 7 } // Требуемый уровень
+        ],
+    },
+    "Лучник": {
+        "Стрелок гарнизона": [
+            { name: "Человеческий сосуд", rarity: "Эпический", quantity: 4, type: "item" },
+            { name: "Легкие доспехи", rarity: "Редкий", quantity: 1, type: "item" },
+            { name: "Боевые медали", rarity: "Эпический", quantity: 2, type: "item" },
+            { name: "Мощный лук", rarity: "Редкий", quantity: 2, type: "item" },
+            { level: 7 } // Требуемый уровень
+        ],
+    },
+    // ...добавляйте другие возвышения по аналогии
+};
+
+// --- Переменные состояния ---
+let materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+materializedCharacters = materializedCharacters.map(char => {
+    if (char.name === "Лучник") {
+        return { ...char, damagetype: "Стрелковый урон" };
+    }
+    return char;
+});
+let selectedAlliesFront = Array(5).fill(null);
+let selectedAlliesBack = Array(5).fill(null);
+let selectedEnemiesFront = Array(5).fill(null);
+let selectedEnemiesBack = Array(5).fill(null);
+let isSelectingAllies2 = true;
+let isSelectingFront = true; // Новая переменная: true — фронт, false — тыл
+let activeRarities = [];
+let isEnemySelect = false;
+// --- DOM элементы ---
+const list = document.getElementById('characters-list');
+const alliesList = document.getElementById('allies-list');
+const enemiesList = document.getElementById('enemies-list');
+const clearButton = document.getElementById('clear-button');
+const randomFightButton = document.getElementById('random-fight-button');
+const rarityFiltersDiv = document.getElementById('rarity-filters');
+const filterButtons = rarityFiltersDiv.querySelectorAll('.rarity-filter-btn');
+const inventoryGrid = document.getElementById('inventory-grid');
+const craftingList = document.getElementById('crafting-list');
+const recipeItems = document.getElementById('recipe-items');
+const craftingError = document.getElementById('crafting-error');
+const craftButton = document.getElementById('craft-button');
+const craftingModal = document.getElementById('crafting-modal');
+const craftedCharacterName = document.getElementById('crafted-character-name');
+const closeModalButton = document.getElementById('close-modal-button');
+const itemCraftingList = document.getElementById('item-crafting-list');
+const itemRecipeItems = document.getElementById('item-recipe-items');
+const itemCraftingError = document.getElementById('item-crafting-error');
+const itemCraftButton = document.getElementById('item-craft-button');
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+const toggleCraftingHeroes = document.getElementById('toggle-crafting-heroes');
+const toggleCraftingItems = document.getElementById('toggle-crafting-items');
+const craftingHeroesSection = document.getElementById('crafting-heroes');
+const craftingItemsSection = document.getElementById('crafting-items');
+const playerPanel = document.getElementById('player-panel');
+const profileModal = document.getElementById('profile-modal');
+const profileAvatar = document.getElementById('profile-avatar');
+const closeProfileModal = document.getElementById('close-profile-modal');
+const saveSquadBtn = document.getElementById('save-squad-btn');
+const campaignButton = document.getElementById('campaign-button');
+const closeCampaignModal = document.getElementById('close-campaign-modal');
+
+const isDebug = localStorage.getItem('enemyDebugMode') === '1';
+
+// --- DOM элементы ---
+const toggleEnemyBtn = document.getElementById('toggle-enemy-select-btn');
+const enemiesFrontGrid = document.getElementById('enemies-front-grid');
+const enemiesBackGrid = document.getElementById('enemies-back-grid');
+const enemiesBlock = document.getElementById('enemies-front-grid').parentElement.parentElement;
+const enemyFightBtn = document.getElementById('enemy-fight-btn');
+
+
+// --- Вспомогательные функции ---
+function getRarityClass(rarity) { return rarityColors2[rarity] || ''; }
+function getRarityOrder(rarity) { return rarityOrder.indexOf(rarity) + 1 || 99; }
+function getPlayerProfile() { return JSON.parse(localStorage.getItem('playerProfile')) || { ...defaultProfile }; }
+function setPlayerProfile(profile) { localStorage.setItem('playerProfile', JSON.stringify(profile)); }
+
+function saveSelectedCharacters() {
+    localStorage.setItem('selectedAlliesFront', JSON.stringify(selectedAlliesFront));
+    localStorage.setItem('selectedAlliesBack', JSON.stringify(selectedAlliesBack));
+    localStorage.setItem('selectedEnemiesFront', JSON.stringify(selectedEnemiesFront.filter(Boolean)));
+    localStorage.setItem('selectedEnemiesBack', JSON.stringify(selectedEnemiesBack.filter(Boolean)));
+}
+
+function clearSelectedCharacters() {
+    selectedAlliesFront = Array(5).fill(null);
+    selectedAlliesBack = Array(5).fill(null);
+    selectedEnemiesFront = Array(5).fill(null);
+    selectedEnemiesBack = Array(5).fill(null);
+}
+function updatePlayerPanel() {
+    const profile = getPlayerProfile();
+    document.getElementById('player-avatar').src = profile.avatar;
+    document.getElementById('player-nickname').textContent = profile.nickname;
+    document.getElementById('player-level').textContent = `Ур. ${profile.level}`;
+}
+
+function updateEnemyUIVisibility() {
+    if (!isDebug) {
+        toggleEnemyBtn.style.display = 'none';
+        enemiesBlock.style.display = 'none';
+        enemyFightBtn.style.display = 'none';
+    } else {
+        toggleEnemyBtn.style.display = '';
+        enemyFightBtn.style.display = isEnemySelect ? '' : 'none';
+        enemiesBlock.style.display = '';
+    }
+}
+updateEnemyUIVisibility();
+
+toggleEnemyBtn.onclick = function() {
+    isEnemySelect = !isEnemySelect;
+    updateCharactersList();
+    // Показываем/скрываем сетки
+    document.getElementById('allies-front-grid').parentElement.parentElement.style.display = isEnemySelect ? 'none' : '';
+    enemiesBlock.style.display = isEnemySelect ? '' : 'none';
+    enemyFightBtn.style.display = isEnemySelect ? '' : 'none';
+    toggleEnemyBtn.textContent = isEnemySelect ? 'Переключить на союзников' : 'Переключить на врагов';
+};
+
+enemyFightBtn.onclick = function() {
+    localStorage.setItem('selectedEnemiesFront', JSON.stringify(selectedEnemiesFront));
+    localStorage.setItem('selectedEnemiesBack', JSON.stringify(selectedEnemiesBack));
+    window.location.href = 'index.html';
+};
+
+function addItemToInventory(name, rarity, quantity = 1, type = 'item') {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const existingItem = inventory.find(item => item.name === name && item.rarity === rarity && item.type === type);
+    if (existingItem) existingItem.quantity += quantity;
+    else if (inventory.length < 80) inventory.push({ name, rarity, quantity, type });
+    else return;
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    loadInventory();
+    updateCharactersList();
+}
+window.addItemToInventory = addItemToInventory;
+
+// --- Инвентарь ---
+function loadInventory() {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    inventoryGrid.innerHTML = '';
+    for (let i = 0; i < 80; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('inventory-cell');
+        if (i < inventory.length) {
+            const item = inventory[i];
+            cell.style.backgroundColor = rarityColors[item.rarity] || '#fff';
+            cell.innerHTML = `<div class="item-name">${item.name}</div><div class="item-quantity">${item.quantity}</div>`;
+            cell.title = `${item.name} (${item.rarity})`;
+        } else cell.style.backgroundColor = '#f0f0f0';
+        inventoryGrid.appendChild(cell);
+    }
+}
+
+function addCharacterToFirstFreeSlot(character, selectionFront, selectionBack) {
+    let arr = selectionFront.length < 5 ? selectionFront : selectionBack;
+    if (arr.length < 5) {
+        arr.push(character);
+        saveSelectedCharacters();
+        renderAllGrids();
+        updateCharactersList();
+        return true;
+    }
+    return false;
+}
+
+// --- Списки выбора союзников и врагов ---
+function updateSelection(listElement, selectionArray, className) {
+    listElement.innerHTML = '';
+    selectionArray.forEach((character, index) => {
+        if (!character) return; // пропускаем пустые ячейки
+        const listItem = document.createElement('li');
+        listItem.textContent = `${character.name} (${index + 1})`;
+        listItem.classList.add(className);
+        listItem.addEventListener('click', () => {
+            // Удаляем персонажа из сетки
+            selectionArray[index] = null;
+            saveSelectedCharacters();
+            renderAllGrids();
+            updateCharactersList();
+        });
+        listElement.appendChild(listItem);
+    });
+}
+
+// --- Кнопки и фильтры ---
+clearButton.addEventListener('click', () => {
+    selectedAlliesFront = Array(5).fill(null);
+    selectedAlliesBack = Array(5).fill(null);
+    renderAlliesGrids();
+    updateCharactersList();
+});
+
+    toggleCraftingHeroes.addEventListener('click', () => {
+        toggleCraftingHeroes.classList.add('active');
+        toggleCraftingItems.classList.remove('active');
+        craftingHeroesSection.style.display = 'block';
+        craftingItemsSection.style.display = 'none';
+    });
+
+    toggleCraftingItems.addEventListener('click', () => {
+        toggleCraftingItems.classList.add('active');
+        toggleCraftingHeroes.classList.remove('active');
+        craftingHeroesSection.style.display = 'none';
+        craftingItemsSection.style.display = 'block';
+    });
+
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const rarity = btn.getAttribute('data-rarity');
+        if (activeRarities.includes(rarity)) {
+            activeRarities = activeRarities.filter(r => r !== rarity);
+            btn.classList.remove('active');
+        } else {
+            activeRarities.push(rarity);
+            btn.classList.add('active');
+        }
+        updateCharactersList();
+    });
+});
+
+// --- Список персонажей для выбора ---
+function updateCharactersList() {
+    list.innerHTML = '';
+    const materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    const selectedIds = selectedAlliesFront.concat(selectedAlliesBack)
+    .filter(Boolean)
+    .map(c => c.isMaterialized ? String(c.materializedId) : c.id);
+        // Материализованные персонажи
+        if (isEnemySelect) {
+        // Все персонажи (враги)
+        characters.forEach(character => {
+            const li = document.createElement('li');
+            li.className = 'character-list-item';
+            li.innerHTML = `<b>${character.name}</b> (${character.rarity})`;
+            li.draggable = true;
+            li.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('application/json', JSON.stringify(character));
+            });
+            list.appendChild(li);
+        });
+    } else {
+        materializedCharacters
+            .filter(char =>
+                (activeRarities.length === 0 || activeRarities.includes(char.rarity)) &&
+                !selectedIds.includes(String(char.id))
+            )
+            .forEach(char => {
+                const listItem = document.createElement('li');
+                listItem.classList.add(getRarityClass(char.rarity), 'materialized-character-list');
+                listItem.innerHTML = `
+                    <span style="font-weight:bold; display:flex; justify-content:center; font-size:22px; text-align: center;">${char.name} </span>
+                    <strong>Уровень:</strong> ${char.level} <br>
+                    <strong>Опыт:</strong> ${char.exp}/${char.maxExp} <br>
+                    <strong>Редкость:</strong> <span style="font-weight:bold">${char.rarity}</span><br>
+                    <strong>Здоровье:</strong> ${char.health}<br>
+                    <strong>Защита:</strong> ${char.defense}%<br>
+                    <strong>${char.damagetype}:</strong> ${typeof char.damage === 'function' 
+                        ? Math.round(char.damage.call(char)) 
+                        : char.damage}<br>
+                    <strong>Скорость:</strong> ${char.speed}<br>
+                    <strong>Особенность:</strong> ${char.description}<br>
+                `;
+                // Drag&Drop для материализованных персонажей
+                listItem.draggable = true;
+                listItem.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('application/json', JSON.stringify(char));
+                });
+                // Старый клик-выбор можно оставить или убрать
+                listItem.addEventListener('click', () => {
+                    let gridArr = isSelectingFront ? selectedAlliesFront : selectedAlliesBack;
+                    let idx = gridArr.findIndex(cell => cell === null);
+                    if (idx !== -1) {
+                        gridArr[idx] = { ...char, isMaterialized: true, materializedId: String(char.id) };
+                        saveSelectedCharacters();
+                        renderAlliesGrids();
+                        updateCharactersList();
+                    }
+                });
+                list.appendChild(listItem);
+        });
+    }
+}
+
+// --- Кнопки битвы ---
+
+randomFightButton.addEventListener('click', () => {
+    const alliesCount = [...selectedAlliesFront, ...selectedAlliesBack].filter(Boolean).length;
+    if (alliesCount === 0) return;
+    const rarityWeights = { "Обычный": 50, "Необычный": 30, "Редкий": 15, "Сверхредкий": 10, "Эпический": 5, "Мифический": 3, "Легендарный": 2 };
+    const randomEnemies = [];
+    while (randomEnemies.length < 10) {
+        const rarityPool = Object.keys(rarityWeights).filter(rarity => Math.random() * 100 < rarityWeights[rarity]);
+        const selectedRarity = rarityPool[Math.floor(Math.random() * rarityPool.length)];
+        const charactersOfRarity = characters.filter(c => c.rarity === selectedRarity);
+        if (charactersOfRarity.length > 0) {
+            const randomCharacter = charactersOfRarity[Math.floor(Math.random() * charactersOfRarity.length)];
+            randomEnemies.push({ ...randomCharacter });
+        }
+    }
+    // Заполняем фронт и тыл врагов
+    selectedEnemiesFront = randomEnemies.slice(0, 5);
+    selectedEnemiesBack = randomEnemies.slice(5, 10);
+    localStorage.setItem('selectedEnemiesFront', JSON.stringify(selectedEnemiesFront));
+    localStorage.setItem('selectedEnemiesBack', JSON.stringify(selectedEnemiesBack));
+    localStorage.setItem('selectedAlliesFront', JSON.stringify(selectedAlliesFront));
+    localStorage.setItem('selectedAlliesBack', JSON.stringify(selectedAlliesBack));
+    window.location.href = 'index.html';
+});
+
+setInterval(() => {
+    const alliesCount = [...selectedAlliesFront, ...selectedAlliesBack].filter(Boolean).length;
+    randomFightButton.disabled = alliesCount === 0;
+}, 50);
+
+// --- Фильтры и вкладки ---
+function renderCharactersList() { updateCharactersList(); }
+filterButtons.forEach(btn => btn.addEventListener('click', renderCharactersList));
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        if (!tabId) return;
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        button.classList.add('active');
+        const activeTab = document.getElementById(tabId);
+        if (activeTab) activeTab.classList.add('active');
+    });
+});
+
+// --- Крафт персонажей ---
+function renderCraftingList() {
+    craftingList.innerHTML = '';
+    allCharacters
+        .filter(character => character.canBeCrafted) // Только те, у кого canBeCrafted true
+        .forEach(character => {
+            const listItem = document.createElement('div');
+            listItem.classList.add('crafting-item', rarityColors2[character.rarity]);
+            listItem.textContent = `${character.name} - ${character.rarity}`;
+            listItem.addEventListener('click', () => {
+                document.querySelectorAll('.crafting-item').forEach(item => item.classList.remove('selected'));
+                listItem.classList.add('selected');
+                if (craftingRecipes[character.name]) selectCharacterForCrafting(character.name);
+            });
+            craftingList.appendChild(listItem);
+        });
+}
+
+function selectCharacterForCrafting(characterName) {
+    const recipe = craftingRecipes[characterName];
+    recipeItems.innerHTML = '';
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    recipe.forEach(item => {
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === item.rarity);
+        const currentQuantity = inventoryItem ? inventoryItem.quantity : 0;
+        const recipeItem = document.createElement('div');
+        recipeItem.classList.add('recipe-item');
+        recipeItem.innerHTML = `
+            <div class="item-icon" style="background-color: ${rarityColors[item.rarity]}; width: 30px; height: 30px; border-radius: 5px;"></div>
+            <span>x${item.quantity} ${item.name} (${currentQuantity}/${item.quantity})</span>
+        `;
+        recipeItems.appendChild(recipeItem);
+    });
+    const canCraft = recipe.every(item => {
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === item.rarity);
+        return inventoryItem && inventoryItem.quantity >= item.quantity;
+    });
+    craftingError.style.display = canCraft ? 'none' : 'block';
+    craftButton.disabled = !canCraft;
+    craftButton.onclick = () => craftCharacter(characterName, recipe);
+}
+function craftCharacter(characterName, recipe) {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    recipe.forEach(item => {
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === item.rarity);
+        if (inventoryItem) inventoryItem.quantity -= item.quantity;
+    });
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    loadInventory();
+    const characterData = allCharacters.find(c => c.name === characterName);
+    const rarity = characterData ? characterData.rarity : "Обычный";
+    addItemToInventory(characterName, rarity, 1, "character");
+    craftedCharacterName.textContent = characterName;
+    craftingModal.style.display = 'block';
+}
+closeModalButton.addEventListener('click', () => { craftingModal.style.display = 'none'; });
+
+// --- Крафт предметов ---
+function renderItemCraftingList() {
+        itemCraftingList.innerHTML = ''; // Очищаем список
+        Object.keys(sortedItemCraftingRecipes).forEach(itemName => {
+
+            // Определяем редкость предмета из массива items
+            const itemData = items.find(item => item.name.toLowerCase().trim() === itemName.toLowerCase().trim());
+            const rarity = itemData ? itemData.rarity : 'Обычный';
+
+            const listItem = document.createElement('div');
+            listItem.classList.add('crafting-item', rarityColors2[rarity]); // Добавляем класс редкости
+            listItem.textContent = itemName;
+
+            listItem.addEventListener('click', () => {
+                document.querySelectorAll('.crafting-item').forEach(item => item.classList.remove('selected'));
+                listItem.classList.add('selected');
+                selectItemForCrafting(itemName);
+            });
+
+            itemCraftingList.appendChild(listItem);
+        });
+    }
+    
+function selectItemForCrafting(itemName) {
+    const recipe = itemCraftingRecipes[itemName];
+    if (!recipe) return;
+    itemRecipeItems.innerHTML = '';
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    recipe.forEach(item => {
+        const itemData = items.find(i => i.name === item.name);
+        const rarity = itemData ? itemData.rarity : "Обычный";
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === rarity);
+        const currentQuantity = inventoryItem ? inventoryItem.quantity : 0;
+        const recipeItem = document.createElement('div');
+        recipeItem.classList.add('recipe-item');
+        recipeItem.innerHTML = `
+            <div class="item-icon" style="background-color: ${rarityColors[rarity]}; width: 30px; height: 30px; border-radius: 5px;"></div>
+            <span>x${item.quantity} ${item.name} (${currentQuantity}/${item.quantity})</span>
+        `;
+        itemRecipeItems.appendChild(recipeItem);
+    });
+    const canCraft = recipe.every(item => {
+        const itemData = items.find(i => i.name === item.name);
+        const rarity = itemData ? itemData.rarity : "Обычный";
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === rarity);
+        return inventoryItem && inventoryItem.quantity >= item.quantity;
+    });
+    itemCraftingError.style.display = canCraft ? 'none' : 'block';
+    itemCraftButton.disabled = !canCraft;
+    itemCraftButton.onclick = () => {
+        craftItem(itemName, recipe);
+        selectItemForCrafting(itemName);
+    };
+}
+function craftItem(itemName, recipe) {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    recipe.forEach(item => {
+        const inventoryItem = inventory.find(i => i.name === item.name && i.rarity === item.rarity);
+        if (inventoryItem) inventoryItem.quantity -= item.quantity;
+    });
+    const itemData = items.find(i => i.name === itemName);
+    const rarity = itemData ? itemData.rarity : "Обычный";
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    loadInventory();
+    addItemToInventory(itemName, rarity, 1, "item");
+    renderItemCraftingList();
+}
+
+// --- Материализация персонажей ---
+inventoryGrid.addEventListener('click', function(e) {
+    const cell = e.target.closest('.inventory-cell');
+    if (!cell) return;
+    const idx = Array.from(inventoryGrid.children).indexOf(cell);
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const item = inventory[idx];
+    if (!item || item.type !== 'character') return;
+    const modal = document.getElementById('materialize-modal');
+    const info = document.getElementById('materialize-character-info');
+    info.textContent = `${item.name} (${item.rarity})`;
+    modal.style.display = 'block';
+    modal.dataset.idx = idx;
+});
+document.getElementById('close-materialize-modal').onclick = function() {
+    document.getElementById('materialize-modal').style.display = 'none';
+};
+document.getElementById('materialize-confirm').onclick = function() {
+    const modal = document.getElementById('materialize-modal');
+    const idx = +modal.dataset.idx;
+    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const item = inventory[idx];
+    if (!item) return;
+    item.quantity--;
+    if (item.quantity <= 0) inventory.splice(idx, 1);
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    const base = characters.find(c => c.name === item.name && c.rarity === item.rarity);
+    if (base) {
+        const newChar = { ...base, id: Date.now() + Math.random(), level: 1, exp: 0, maxExp: 100 };
+        materializedCharacters.push(newChar);
+        localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
+    }
+    document.getElementById('materialize-modal').style.display = 'none';
+    loadInventory();
+    renderMaterializedCharacters();
+    updateCharactersList();
+};
+function renderMaterializedCharacters() {
+    const container = document.getElementById('materialized-characters-list');
+    if (!container) return;
+    materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    container.innerHTML = '';
+    materializedCharacters.forEach((char, idx) => {
+        const div = document.createElement('div');
+        div.className = 'materialized-character';
+        div.style.background = rarityColors[char.rarity] || '#fff';
+        div.style.margin = '4px';
+        div.style.padding = '4px';
+        div.innerHTML = `
+            <b>${char.name}</b> (ур. ${char.level})<br>
+            Здоровье: ${char.health}<br>
+            Опыт: ${char.exp}/${char.maxExp}
+            <button data-idx="${idx}" class="add-to-allies-btn">В бой</button>
+        `;
+        container.appendChild(div);
+    });
+    container.querySelectorAll('.add-to-allies-btn').forEach(btn => {
+        btn.onclick = function() {
+            const idx = +btn.dataset.idx;
+            addCharacterToFirstFreeSlot(
+                { ...materializedCharacters[idx], isMaterialized: true, materializedId: materializedCharacters[idx].id },
+                selectedAlliesFront,
+                selectedAlliesBack
+            );
+        };
+    });
+}
+
+// --- Сохранение и восстановление отряда ---
+function loadSavedSquad() {
+    const savedFront = JSON.parse(localStorage.getItem('selectedAlliesFront')) || Array(5).fill(null);
+    const savedBack = JSON.parse(localStorage.getItem('selectedAlliesBack')) || Array(5).fill(null);
+    selectedAlliesFront = savedFront;
+    selectedAlliesBack = savedBack;
+    renderAlliesGrids();
+    updateCharactersList();
+}
+
+function renderSavedSquad() {
+    const front = JSON.parse(localStorage.getItem('selectedAlliesFront')) || [];
+    const back = JSON.parse(localStorage.getItem('selectedAlliesBack')) || [];
+    const container = document.getElementById('saved-squad-list');
+    container.innerHTML = '';
+
+    // Фронт
+    const frontDiv = document.createElement('div');
+    frontDiv.style.marginBottom = '8px';
+    frontDiv.innerHTML = '<b>Передний фронт:</b><br>';
+    front.forEach(char => {
+        if (!char) return;
+        const div = document.createElement('div');
+        div.style.background = '#f3f3f3';
+        div.style.borderRadius = '8px';
+        div.style.width = '120px';
+        div.style.padding = '4px 8px';
+        div.style.display = 'inline-block';
+        div.style.margin = '2px';
+        div.innerHTML = `<span style="font-weight:bold;">${char.name}</span> <br> <span style="font-size:0.9em;">ур. ${char.level}</span>`;
+        frontDiv.appendChild(div);
+    });
+    container.appendChild(frontDiv);
+
+    // Тыл
+    const backDiv = document.createElement('div');
+    backDiv.innerHTML = '<b>Задний фронт:</b><br>';
+    back.forEach(char => {
+        if (!char) return;
+        const div = document.createElement('div');
+        div.style.background = '#f3f3f3';
+        div.style.borderRadius = '8px';
+        div.style.width = '120px';
+        div.style.padding = '4px 8px';
+        div.style.display = 'inline-block';
+        div.style.margin = '2px';
+        div.innerHTML = `<span style="font-weight:bold;">${char.name}</span> <br> <span style="font-size:0.9em;">ур. ${char.level}</span>`;
+        backDiv.appendChild(div);
+    });
+    container.appendChild(backDiv);
+}
+
+// --- Профиль игрока ---
+function addPlayerExp(amount) {
+    let profile = getPlayerProfile();
+    profile.exp += amount;
+    let leveledUp = false;
+    while (profile.exp >= profile.maxExp) {
+        profile.exp -= profile.maxExp;
+        profile.level += 1;
+        profile.maxExp = Math.round(profile.maxExp * 1.5);
+        leveledUp = true;
+    }
+    setPlayerProfile(profile);
+    updatePlayerPanel();
+    return leveledUp;
+}
+playerPanel.onclick = () => {
+    const profile = getPlayerProfile();
+    document.getElementById('profile-avatar').src = profile.avatar;
+    document.getElementById('profile-nickname').textContent = profile.nickname;
+    document.getElementById('profile-level').textContent = profile.level;
+    document.getElementById('profile-exp-label').textContent = `Опыт: ${profile.exp}/${profile.maxExp}`;
+    document.getElementById('profile-exp-bar').style.width = `${Math.min(100, 100 * profile.exp / profile.maxExp)}%`;
+    document.getElementById('nickname-input').style.display = 'none';
+    document.getElementById('profile-nickname').style.display = '';
+    renderSavedSquad();
+    profileModal.style.display = 'flex';
+};
+closeProfileModal.onclick = () => profileModal.style.display = 'none';
+profileAvatar.onmouseenter = () => profileAvatar.style.filter = 'grayscale(0.5)';
+profileAvatar.onmouseleave = () => profileAvatar.style.filter = '';
+profileAvatar.onclick = () => document.getElementById('avatar-input').click();
+document.getElementById('avatar-input').onchange = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        const profile = getPlayerProfile();
+        profile.avatar = evt.target.result;
+        setPlayerProfile(profile);
+        updatePlayerPanel();
+        profileAvatar.src = profile.avatar;
+    };
+    reader.readAsDataURL(file);
+};
+document.getElementById('profile-edit-nickname').onclick = () => {
+    document.getElementById('profile-nickname').style.display = 'none';
+    const input = document.getElementById('nickname-input');
+    input.value = getPlayerProfile().nickname;
+    input.style.display = '';
+    input.focus();
+};
+document.getElementById('nickname-input').onblur = function() {
+    const val = this.value.trim() || "Игрок";
+    const profile = getPlayerProfile();
+    profile.nickname = val;
+    setPlayerProfile(profile);
+    updatePlayerPanel();
+    document.getElementById('profile-nickname').textContent = val;
+    this.style.display = 'none';
+    document.getElementById('profile-nickname').style.display = '';
+};
+document.getElementById('nickname-input').onkeydown = function(e) {
+    if (e.key === 'Enter') this.blur();
+};
+saveSquadBtn.addEventListener('click', function() {
+    localStorage.setItem('selectedAlliesFront', JSON.stringify(selectedAlliesFront))
+    localStorage.setItem('selectedAlliesBack', JSON.stringify(selectedAlliesBack))
+    loadSavedSquad();
+    alert('Отряд сохранён!');
+});
+
+// --- Кампания ---
+campaignButton.onclick = function() {
+    const modal = document.getElementById('campaign-modal');
+    for (let j = 0; j < 5; j++) {
+        const location = document.getElementsByClassName('campaign-levels')[j];
+        location.innerHTML = '';
+    }
+    for (let j = 0; j < 5; j++) {
+        const location = document.getElementsByClassName('campaign-levels')[j];
+        for (let i = 0; i < 20; i++) {
+            const btn = document.createElement('button');
+            const levelNum = j * 20 + i + 1;
+            btn.textContent = `Уровень ${levelNum}`;
+            btn.style.padding = '18px 0';
+            btn.style.fontWeight = 'bold';
+            btn.disabled = !campaignLevels[j * 20 + i];
+            const completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
+            if (completedLevels.includes(levelNum)) btn.classList.add('completed-level');
+            btn.onclick = () => {
+                startCampaignBattle(j * 20 + i);
+                modal.style.display = 'none';
+            };
+            location.appendChild(btn);
+        }
+    }
+    modal.style.display = 'flex';
+};
+closeCampaignModal.onclick = function() {
+    document.getElementById('campaign-modal').style.display = 'none';
+};
+function chooseLocation(x) {
+    for (let j = 0; j < 5; j++) {
+        const location = document.getElementsByClassName('campaign-levels')[j];
+        location.style.display = 'none';
+    }
+    document.getElementsByClassName('campaign-levels')[x].style.display = 'grid';
+}
+document.getElementsByClassName('location-choose')[0].onclick = function() { chooseLocation(0); }
+document.getElementsByClassName('location-choose')[1].onclick = function() { chooseLocation(1); }
+document.getElementsByClassName('location-choose')[2].onclick = function() { chooseLocation(2); }
+document.getElementsByClassName('location-choose')[3].onclick = function() { chooseLocation(3); }
+document.getElementsByClassName('location-choose')[4].onclick = function() { chooseLocation(4); }
+
+function startCampaignBattle(levelIdx) {
+    const level = campaignLevels[levelIdx];
+    if (!level) return alert('Уровень не настроен!');
+    localStorage.setItem('currentLevel', levelIdx + 1);
+
+    let enemiesFront = [], enemiesBack = [];
+    if (Array.isArray(level)) {
+        // Старый формат — всё в передний фронт
+        enemiesFront = level.map(enemyDef => createEnemyFromDef(enemyDef)).filter(Boolean);
+    } else {
+        enemiesFront = (level.front || []).map(enemyDef => createEnemyFromDef(enemyDef)).filter(Boolean);
+        enemiesBack = (level.back || []).map(enemyDef => createEnemyFromDef(enemyDef)).filter(Boolean);
+    }
+    localStorage.setItem('selectedEnemiesFront', JSON.stringify(enemiesFront));
+    localStorage.setItem('selectedEnemiesBack', JSON.stringify(enemiesBack));
+    localStorage.setItem('selectedAlliesFront', JSON.stringify(selectedAlliesFront));
+    localStorage.setItem('selectedAlliesBack', JSON.stringify(selectedAlliesBack));
+    window.location.href = 'index.html';
+}
+function createEnemyFromDef(enemyDef) {
+    const base = characters.find(c => c.name === enemyDef.name);
+    if (!base) return null;
+    let enemy = { ...base };
+    const lvl = enemyDef.level || 1;
+    enemy.level = lvl;
+    enemy.maxHealth = Math.round((base.maxHealth || base.health || 100) * Math.pow(1.1, lvl - 1));
+    enemy.health = enemy.maxHealth;
+    if (typeof base.damage === 'number') {
+        enemy.damage = Math.round(base.damage * Math.pow(1.1, lvl - 1));
+    } else if (typeof base.damage === 'function') {
+        const baseFunc = base.damage;
+        enemy.damage = function() {
+            return Math.round(baseFunc.call(this) * Math.pow(1.1, lvl - 1));
+        };
+    }
+    return enemy;
+}
+
+// --- Инициализация ---
+window.addEventListener('DOMContentLoaded', () => {
+    loadSavedSquad();
+    renderCraftingList();
+    renderItemCraftingList();
+    loadInventory();
+    renderMaterializedCharacters();
+    updatePlayerPanel();
+    updateCharactersList();
+    if (localStorage.getItem('enemyDebugMode') === '1') {
+        setupEnemyDebugUI();
+    }
+});
+window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('isRefreshing', 'true');
+});
+window.addEventListener('load', function() {
+    const isRefreshing = sessionStorage.getItem('isRefreshing');
+    if (isRefreshing === 'true') {
+        sessionStorage.removeItem('isRefreshing');
+        returnCharactersToInventory2();
+        clearSelectedCharacters();
+        renderCraftingList();
+        loadSavedSquad();
+        updateCharactersList();
+        renderMaterializedCharacters();
+    } else {
+        loadSavedSquad();
+    }
+});
+function returnCharactersToInventory2() {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const allies = JSON.parse(localStorage.getItem('selectedAllies')) || [];
+    let materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    allies.forEach(character => {
+        if (character.isMaterialized && character.materializedId) {
+            if (!materializedCharacters.some(c => c.id === character.materializedId)) {
+                materializedCharacters.push(character);
+            }
+        } else {
+            const inventoryItem = inventory.find(item => item.name === character.name && item.rarity === character.rarity);
+            if (inventoryItem) inventoryItem.quantity += 1;
+            else inventory.push({ name: character.name, rarity: character.rarity, quantity: 1, type: 'character' });
+        }
+    });
+    const filteredInventory = inventory.filter(item => item.quantity > 0);
+    localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
+    localStorage.setItem('inventory', JSON.stringify(filteredInventory));
+    loadInventory();
+}
+
+function renderAlliesGrids() {
+    const frontGrid = document.getElementById('allies-front-grid');
+    const backGrid = document.getElementById('allies-back-grid');
+    frontGrid.innerHTML = '';
+    backGrid.innerHTML = '';
+
+    function handleDragStart(e, line, idx) {
+        e.dataTransfer.setData('application/json', JSON.stringify({
+            from: line,
+            index: idx,
+            character: line === 'front' ? selectedAlliesFront[idx] : selectedAlliesBack[idx]
+        }));
+    }
+
+    for (let i = 0; i < 5; i++) {
+        const cell = document.createElement('li');
+        cell.className = 'ally-cell';
+        cell.dataset.index = i;
+        cell.dataset.line = 'front';
+
+        if (selectedAlliesFront[i]) {
+            cell.innerHTML = `${selectedAlliesFront[i].name} <br> Ур. ${selectedAlliesFront[i].level}`;
+            cell.style.background = '#e0ffe0';
+            cell.draggable = !isEnemySelect;
+            if (!isEnemySelect) {
+                cell.addEventListener('dragstart', (e) => handleDragStart(e, 'front', i));
+                cell.addEventListener('click', () => {
+                    selectedAlliesFront[i] = null;
+                    renderAlliesGrids();
+                    updateCharactersList();
+                });
+            }
+        } else {
+            cell.textContent = 'Пусто';
+        }
+
+        cell.addEventListener('dragover', (e) => {
+            if (!isEnemySelect) e.preventDefault();
+        });
+        cell.addEventListener('dragleave', () => {});
+        cell.addEventListener('drop', (e) => {
+            if (!isEnemySelect) {
+                e.preventDefault();
+                const data = e.dataTransfer.getData('application/json');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (parsed.from) {
+                        let fromArr = parsed.from === 'front' ? selectedAlliesFront : selectedAlliesBack;
+                        let char = fromArr[parsed.index];
+                        if (!selectedAlliesFront[i]) {
+                            fromArr[parsed.index] = null;
+                            selectedAlliesFront[i] = char;
+                            renderAlliesGrids();
+                            updateCharactersList();
+                        }
+                    } else if (parsed.name) {
+                        if (!selectedAlliesFront[i]) {
+                            selectedAlliesFront[i] = {
+                                ...parsed,
+                                isMaterialized: true,
+                                materializedId: String(parsed.id)
+                            };
+                            renderAlliesGrids();
+                            updateCharactersList();
+                        }
+                    }
+                }
+            }
+        });
+        frontGrid.appendChild(cell);
+    }
+
+    // Слоты заднего фронта
+    for (let i = 0; i < 5; i++) {
+        const cell = document.createElement('li');
+        cell.className = 'ally-cell';
+        cell.dataset.index = i;
+        cell.dataset.line = 'back';
+
+        if (selectedAlliesBack[i]) {
+            cell.innerHTML = `${selectedAlliesBack[i].name} <br> Ур. ${selectedAlliesBack[i].level}`;
+            cell.style.background = '#e0ffe0';
+            cell.draggable = !isEnemySelect;
+            if (!isEnemySelect) {
+                cell.addEventListener('dragstart', (e) => handleDragStart(e, 'back', i));
+                cell.addEventListener('click', () => {
+                    selectedAlliesBack[i] = null;
+                    renderAlliesGrids();
+                    updateCharactersList();
+                });
+            }
+        } else {
+            cell.textContent = 'Пусто';
+        }
+
+        cell.addEventListener('dragover', (e) => {
+            if (!isEnemySelect) e.preventDefault();
+        });
+        cell.addEventListener('dragleave', () => {});
+        cell.addEventListener('drop', (e) => {
+            if (!isEnemySelect) {
+                e.preventDefault();
+                const data = e.dataTransfer.getData('application/json');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    if (parsed.from) {
+                        let fromArr = parsed.from === 'back' ? selectedAlliesBack : selectedAlliesFront;
+                        let char = fromArr[parsed.index];
+                        if (!selectedAlliesBack[i]) {
+                            fromArr[parsed.index] = null;
+                            selectedAlliesBack[i] = char;
+                            renderAlliesGrids();
+                            updateCharactersList();
+                        }
+                    } else if (parsed.name) {
+                        if (!selectedAlliesBack[i]) {
+                            selectedAlliesBack[i] = {
+                                ...parsed,
+                                isMaterialized: true,
+                                materializedId: String(parsed.id)
+                            };
+                            renderAlliesGrids();
+                            updateCharactersList();
+                        }
+                    }
+                }
+            }
+        });
+        backGrid.appendChild(cell);
+    }
+}
+
+list.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    list.classList.add('drag-over');
+});
+list.addEventListener('dragleave', () => {
+    list.classList.remove('drag-over');
+});
+list.addEventListener('drop', (e) => {
+    e.preventDefault();
+    list.classList.remove('drag-over');
+    const data = e.dataTransfer.getData('application/json');
+    if (data) {
+        const parsed = JSON.parse(data);
+        if (parsed.from) {
+            let fromArr = parsed.from === 'front' ? selectedAlliesFront : selectedAlliesBack;
+            fromArr[parsed.index] = null;
+            renderAlliesGrids();
+            updateCharactersList();
+        }
+    }
+});
+
+// ...existing code...
+
+// --- Переключение вкладок ---
+document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Только для основных вкладок (у которых есть data-tab)
+        const tabId = btn.getAttribute('data-tab');
+        if (!tabId) return; // <-- добавлено, чтобы не реагировать на внутренние кнопки
+
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById(tabId).style.display = '';
+        // Скрыть остальные вкладки
+        ['characters-tab','inventory-tab','ascension-tab'].forEach(id => {
+            if (id !== tabId && document.getElementById(id)) document.getElementById(id).style.display = 'none';
+        });
+    });
+});
+
+function renderCharactersListUniversal(characters, container, options = {}) {
+    container.innerHTML = '';
+    characters.forEach(char => {
+        const listItem = document.createElement('li');
+        listItem.classList.add(getRarityClass(char.rarity), 'materialized-character-list');
+        listItem.innerHTML = `
+            <span style="font-weight:bold; display:flex; justify-content:center; font-size:22px; text-align: center;">${char.name} </span>
+            <strong>Уровень:</strong> ${char.level} <br>
+            <strong>Опыт:</strong> ${char.exp}/${char.maxExp} <br>
+            <strong>Редкость:</strong> <span style="font-weight:bold">${char.rarity}</span><br>
+            <strong>Здоровье:</strong> ${char.health}<br>
+            <strong>Защита:</strong> ${char.defense}%<br>
+            <strong>${char.damagetype}:</strong> ${typeof char.damage === 'function' 
+                ? Math.round(char.damage.call(char)) 
+                : char.damage}<br>
+            <strong>Скорость:</strong> ${char.speed}<br>
+            <strong>Особенность:</strong> ${char.description}<br>
+        `;
+        // Drag&Drop только если нужно (например, для возвышения)
+        if (options.dragForAscension) {
+            listItem.draggable = true;
+            listItem.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('application/json', JSON.stringify(char));
+            });
+        }
+        container.appendChild(listItem);
+    });
+}
+
+const ascensionList = document.getElementById('ascension-characters-list');
+ascensionList.ondragover = (e) => {
+    if (e.dataTransfer.types.includes('ascension-remove')) e.preventDefault();
+};
+ascensionList.ondrop = (e) => {
+    if (e.dataTransfer.types.includes('ascension-remove')) {
+        e.preventDefault();
+        ascensionSelectedCharacter = null;
+        renderAscensionDropzone();
+        showAscensionBranches(null);
+        renderAscensionRecipe(null);
+        ;
+    }
+};
+
+// --- Список персонажей для возвышения ---
+function renderAscensionCharactersList() {
+    const materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    const container = document.getElementById('ascension-characters-list');
+    // Скрываем выбранного персонажа
+    const filtered = ascensionSelectedCharacter
+        ? materializedCharacters.filter(c => c.id !== ascensionSelectedCharacter.id)
+        : materializedCharacters;
+    renderCharactersListUniversal(filtered, container, { dragForAscension: true });
+}
+
+
+let ascensionSelectedCharacter = null;
+
+const dropzone = document.getElementById('ascension-dropzone');
+dropzone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropzone.style.background = '#e0f7fa';
+});
+dropzone.addEventListener('dragleave', e => {
+    dropzone.style.background = '#f9f9f9';
+});
+dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.style.background = '#f9f9f9';
+    const char = JSON.parse(e.dataTransfer.getData('application/json'));
+    ascensionSelectedCharacter = char;
+    renderAscensionDropzone();
+    showAscensionBranches(char);
+    renderAscensionRecipe(null); // Сброс рецепта
+    renderAscensionCharactersList(); // Обновить список (убрать выбранного)
+});
+
+// Рендер дропа
+function renderAscensionDropzone() {
+    const dz = document.getElementById('ascension-dropzone');
+    dz.innerHTML = '';
+    if (ascensionSelectedCharacter) {
+        dz.textContent = ascensionSelectedCharacter.name;
+        dz.draggable = true;
+        dz.style.cursor = 'grab';
+        dz.ondragstart = (e) => {
+            e.dataTransfer.setData('application/json', JSON.stringify(ascensionSelectedCharacter));
+            // Специальная метка для возврата
+            e.dataTransfer.setData('ascension-remove', '1');
+        };
+        dz.ondragend = (e) => {
+            // Если отпустили вне dropzone — убираем персонажа
+            if (e.dataTransfer.dropEffect === 'none') {
+                ascensionSelectedCharacter = null;
+                renderAscensionDropzone();
+                showAscensionBranches(null);
+                renderAscensionRecipe(null);
+                renderAscensionCharactersList();
+            }
+        };
+    } else {
+        dz.innerHTML = `<span id="ascension-dropzone-placeholder" style="color:#aaa;">Перетащите персонажа</span>`;
+        dz.draggable = false;
+        dz.style.cursor = 'default';
+        dz.ondragstart = null;
+        dz.ondragend = null;
+    }
+}
+
+// --- Отображение веток возвышения ---
+function showAscensionBranches(char) {
+    const branches = document.querySelectorAll('#ascension-branches .ascension-branch');
+    ascensionSelectedCharacter = char;
+    localStorage.setItem('ascensionSelectedCharacter', JSON.stringify(char));
+
+    const asc = char ? ASCENSIONS[char.name] : null;
+    for (let i = 0; i < 3; i++) {
+        const branch = branches[i];
+        const targetNames = asc ? Object.keys(asc) : [];
+        if (targetNames[i]) {
+            const target = targetNames[i];
+            branch.querySelector('.ascension-target').textContent = target;
+            branch.querySelector('.ascension-target').style.background = '#fff';
+            branch.querySelector('.ascension-target').style.cursor = 'pointer';
+            branch.querySelector('.ascension-target').style.border = '2px solid black';
+            branch.querySelector('.ascension-target').style.color = 'black';
+            branch.querySelector('.ascension-target').onclick = () => renderAscensionRecipe({char, target});
+        } else {
+            branch.querySelector('.ascension-target').textContent = '-';
+            branch.querySelector('.ascension-target').style.background = '#aaa';
+            branch.querySelector('.ascension-target').style.cursor = 'not-allowed';
+            branch.querySelector('.ascension-target').style.border = '2px solid black';
+            branch.querySelector('.ascension-target').style.color = 'black';
+            branch.querySelector('.ascension-target').onclick = null;
+        }
+    }
+    // Сброс рецепта если char нет
+    if (!char) renderAscensionRecipe(null);
+}
+
+// --- Показать рецепт возвышения ---
+function showAscensionRecipe(char, target) {
+    const branches = document.querySelectorAll('#ascension-branches .ascension-branch');
+    const asc = ASCENSIONS[char.name];
+    const recipe = asc && asc[target] ? asc[target] : [];
+    // Найти нужную ветку
+    let idx = Object.keys(asc).indexOf(target);
+    if (idx === -1) return;
+    const branch = branches[idx];
+    let html = '';
+    let levelReq = null;
+    recipe.forEach(item => {
+        if (item.level) {
+            levelReq = item.level;
+            html += `<div style="margin:4px 0;color:#4caf50;">Требуемый уровень: ${item.level}</div>`;
+        } else {
+            html += `<div style="margin:4px 0;">${item.name} (${item.rarity}) x${item.quantity}</div>`;
+        }
+    });
+    // Кнопка возвышения
+    const canBeCrafted = (!levelReq || char.level >= levelReq); // + тут добавить проверку на наличие предметов
+    html += `<button ${canBeCrafted ? '' : 'disabled'} style="margin-top:8px;" onclick="ascendCharacter('${char.name}','${target}')">Возвысить</button>`;
+    branch.querySelector('.ascension-recipe').innerHTML = html;
+}
+
+// --- Возвышение персонажа (заглушка) ---
+// ...existing code...
+
+window.ascendCharacter = function(fromName, toName) {
+    let materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const ascRecipe = ASCENSIONS[fromName][toName];
+    // Находим персонажа для возвышения
+    let charIdx = materializedCharacters.findIndex(c => c.name === fromName && c.id === (ascensionSelectedCharacter && ascensionSelectedCharacter.id));
+    if (charIdx === -1) charIdx = materializedCharacters.findIndex(c => c.name === fromName);
+
+    if (charIdx === -1) {
+        alert('Персонаж не найден!');
+        return;
+    }
+    const char = materializedCharacters[charIdx];
+
+    // Проверка уровня
+    const levelReq = ascRecipe.find(r => r.level)?.level || 0;
+    if (char.level < levelReq) {
+        alert('Недостаточный уровень!');
+        return;
+    }
+
+    // Проверка предметов
+    let hasAll = true;
+    for (let req of ascRecipe) {
+        if (req.name) {
+            const invItem = inventory.find(i => i.name === req.name && i.rarity === req.rarity);
+            if (!invItem || invItem.quantity < req.quantity) {
+                hasAll = false;
+                break;
+            }
+        }
+    }
+    if (!hasAll) {
+        alert('Недостаточно ресурсов!');
+        return;
+    }
+
+    // Списание предметов
+    for (let req of ascRecipe) {
+        if (req.name) {
+            let invItem = inventory.find(i => i.name === req.name && i.rarity === req.rarity);
+            if (invItem) invItem.quantity -= req.quantity;
+        }
+    }
+
+    // Удаление старого персонажа из materializedCharacters
+    const oldCharId = char.id;
+    materializedCharacters.splice(charIdx, 1);
+
+    // Удаление из отряда, если был
+    let updateSquad = false;
+    [selectedAlliesFront, selectedAlliesBack].forEach(arr => {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] && arr[i].isMaterialized && arr[i].materializedId == oldCharId) {
+                arr[i] = null;
+                updateSquad = true;
+            }
+        }
+    });
+
+    // Добавление нового персонажа с характеристиками из characters
+    const baseChar = characters.find(c => c.name === toName);
+    if (!baseChar) {
+        alert('Базовый персонаж для возвышения не найден!');
+        return;
+    }
+    // Новый id для нового материализованного персонажа
+    const newChar = {
+        ...baseChar,
+        id: Date.now() + Math.random(),
+        level: 1,
+        exp: 0,
+        maxExp: 100
+    };
+    materializedCharacters.push(newChar);
+
+    // Сохраняем
+    localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    localStorage.setItem('selectedAlliesFront', JSON.stringify(selectedAlliesFront));
+    localStorage.setItem('selectedAlliesBack', JSON.stringify(selectedAlliesBack));
+
+    // Убираем из ячейки для возвышения
+    ascensionSelectedCharacter = null;
+
+    // Обновляем UI
+    renderAscensionCharactersList();
+    renderCharactersList();
+    renderAlliesGrids();
+    renderEnemiesGrids();
+    renderAscensionDropzone();
+    showAscensionBranches(null) 
+
+    // Показываем модальное окно
+    document.getElementById('ascension-modal-text').textContent = `Персонаж "${fromName}" возвышен в "${toName}"!`;
+    document.getElementById('ascension-modal').style.display = 'block';
+};
+
+document.getElementById('close-ascension-modal').onclick = function() {
+    document.getElementById('ascension-modal').style.display = 'none';
+    // Обновить список после возвышения
+    renderAscensionCharactersList();
+};
+
+if (document.getElementById('ascension-characters-list')) {
+    renderAscensionCharactersList();
+}
+
+function renderAscensionRecipe(data) {
+    const panel = document.getElementById('ascension-recipe-panel');
+    if (!data) {
+        panel.innerHTML = '';
+        return;
+    }
+    const { char, target } = data;
+    const asc = ASCENSIONS[char.name];
+    const recipe = asc && asc[target] ? asc[target] : [];
+    let html = `<div style="font-weight:bold;font-size:1.1em;margin-bottom:6px;">Для возвышения в ${target}а требуется:</div>`;
+    let levelReq = null;
+    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    let allEnough = true;
+
+    recipe.forEach(item => {
+        if (item.level) {
+            levelReq = item.level;
+            html += `<div style="margin:4px 0;">
+                <b>Требуемый уровень: ${char.level}/${item.level}</b>
+            </div>`;
+            if (char.level < item.level) allEnough = false;
+        } else {
+            const currentQuantity = (inventory.find(i => i.name === item.name && i.rarity === item.rarity)?.quantity) || 0;
+            if (currentQuantity < item.quantity) allEnough = false;
+            html += `
+                <div class="recipe-item" style="display:flex;align-items:center;gap:8px;margin:4px 0;">
+                    <div class="item-icon" style="background-color: ${rarityColors[item.rarity]}; width: 30px; height: 30px; border-radius: 5px;"></div>
+                    <span>x${item.quantity} ${item.name} (${currentQuantity}/${item.quantity})</span>
+                </div>
+            `;
+        }
+    });
+    html += `<button ${allEnough ? '' : 'disabled'} style="margin-top:8px;" onclick="ascendCharacter('${char.name}','${target}')">Возвысить</button>`;
+    panel.innerHTML = html;
+}
+// --- Включение debug-режима через консоль ---
+window.enableEnemyDebug = function() {
+    localStorage.setItem('enemyDebugMode', '1');
+    location.reload();
+};
+window.disableEnemyDebug = function() {
+    localStorage.removeItem('enemyDebugMode');
+    location.reload();
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('enemyDebugMode') === '1') {
+        setupEnemyDebugUI();
+    }
+});
+
+function setupEnemyDebugUI() {
+    let isEnemyMode = false;
+    const enemiesBlock = document.getElementById('enemies-squad-block');
+    const toggleBtn = document.getElementById('toggle-enemy-select-btn');
+
+    toggleBtn.onclick = function() {
+        isEnemyMode = !isEnemyMode;
+        enemiesBlock.style.display = isEnemyMode ? '' : 'none';
+        toggleBtn.textContent = isEnemyMode ? 'Переключить на союзников' : 'Переключить на врагов';
+        renderSquads();
+        renderCharactersList();
+    };
+
+
+    function renderSquads() {
+        // союзники
+        renderGrid('allies-front-grid', selectedAlliesFront, true);
+        renderGrid('allies-back-grid', selectedAlliesBack, true);
+        // враги
+        renderGrid('enemies-front-grid', selectedEnemiesFront, false);
+        renderGrid('enemies-back-grid', selectedEnemiesBack, false);
+    }
+
+    function renderGrid(gridId, arr, isAlly) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+            const cell = document.createElement('li');
+            cell.className = isAlly ? 'ally-cell' : 'enemy-cell';
+            if (arr[i]) {
+                cell.innerHTML = `${arr[i].name} <br> Ур. ${arr[i].level || 1}`;
+                cell.style.background = isAlly ? '#e0ffe0' : '#ffe0e0';
+                cell.draggable = true;
+                cell.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('application/json', JSON.stringify({ index: i, from: gridId }));
+                });
+                cell.addEventListener('click', () => {
+                    arr[i] = null;
+                    saveSelectedCharacters();
+                    renderSquads();
+                    renderCharactersList();
+                });
+            } else {
+                cell.textContent = 'Пусто';
+            }
+            grid.appendChild(cell);
+        }
+    }
+
+    // При загрузке показываем только союзников
+    enemiesBlock.style.display = 'none';
+    renderSquads();
+}
+
+document.getElementById('toggle-enemy-select-btn').onclick = function() {
+    isEnemySelect = !isEnemySelect;
+    updateCharactersList();
+};
+
+document.getElementById('enemy-fight-btn').onclick = function() {
+    localStorage.setItem('selectedEnemiesFront', JSON.stringify(selectedEnemiesFront));
+    localStorage.setItem('selectedEnemiesBack', JSON.stringify(selectedEnemiesBack));
+    window.location.href = 'index.html';
+};
+
+function renderEnemiesGrids() {
+    const frontGrid = document.getElementById('enemies-front-grid');
+    const backGrid = document.getElementById('enemies-back-grid');
+    frontGrid.innerHTML = '';
+    backGrid.innerHTML = '';
+
+    function handleDragStart(e, line, idx) {
+        e.dataTransfer.setData('application/json', JSON.stringify({
+            from: line, // 'front' или 'back'
+            index: idx,
+            character: line === 'front' ? selectedEnemiesFront[idx] : selectedEnemiesBack[idx]
+        }));
+    }
+
+    for (let i = 0; i < 5; i++) {
+        // FRONT
+        const cell = document.createElement('li');
+        cell.className = 'enemy-cell';
+        cell.dataset.index = i;
+        cell.dataset.line = 'front';
+
+        if (selectedEnemiesFront[i]) {
+            cell.innerHTML = `${selectedEnemiesFront[i].name} <br> Ур. ${selectedEnemiesFront[i].level || 1}`;
+            cell.style.background = '#ffe0e0';
+            cell.draggable = true;
+            cell.addEventListener('dragstart', (e) => handleDragStart(e, 'front', i));
+            cell.addEventListener('click', () => {
+                selectedEnemiesFront[i] = null;
+                renderEnemiesGrids();
+                updateCharactersList();
+            });
+        } else {
+            cell.textContent = 'Пусто';
+        }
+
+        cell.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            cell.classList.add('drag-over');
+        });
+        cell.addEventListener('dragleave', () => {
+            cell.classList.remove('drag-over');
+        });
+        cell.addEventListener('drop', (e) => {
+            e.preventDefault();
+            cell.classList.remove('drag-over');
+            const data = e.dataTransfer.getData('application/json');
+            if (data) {
+                const parsed = JSON.parse(data);
+                // Перетаскивание из другого слота
+                if (parsed.from) {
+                    let fromArr = parsed.from === 'front' ? selectedEnemiesFront : selectedEnemiesBack;
+                    let char = fromArr[parsed.index];
+                    if (!selectedEnemiesFront[i]) {
+                        fromArr[parsed.index] = null;
+                        selectedEnemiesFront[i] = char;
+                        renderEnemiesGrids();
+                        updateCharactersList();
+                    }
+                }
+                // Перетаскивание из списка
+                else if (parsed.name) {
+                    if (!selectedEnemiesFront[i]) {
+                        selectedEnemiesFront[i] = { ...parsed };
+                        renderEnemiesGrids();
+                        updateCharactersList();
+                    }
+                }
+            }
+        });
+        frontGrid.appendChild(cell);
+    }
+
+    for (let i = 0; i < 5; i++) {
+        // BACK
+        const cell = document.createElement('li');
+        cell.className = 'enemy-cell';
+        cell.dataset.index = i;
+        cell.dataset.line = 'back';
+
+        if (selectedEnemiesBack[i]) {
+            cell.innerHTML = `${selectedEnemiesBack[i].name} <br> Ур. ${selectedEnemiesBack[i].level || 1}`;
+            cell.style.background = '#ffe0e0';
+            cell.draggable = true;
+            cell.addEventListener('dragstart', (e) => handleDragStart(e, 'back', i));
+            cell.addEventListener('click', () => {
+                selectedEnemiesBack[i] = null;
+                renderEnemiesGrids();
+                updateCharactersList();
+            });
+        } else {
+            cell.textContent = 'Пусто';
+        }
+
+        cell.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            cell.classList.add('drag-over');
+        });
+        cell.addEventListener('dragleave', () => {
+            cell.classList.remove('drag-over');
+        });
+        cell.addEventListener('drop', (e) => {
+            e.preventDefault();
+            cell.classList.remove('drag-over');
+            const data = e.dataTransfer.getData('application/json');
+            if (data) {
+                const parsed = JSON.parse(data);
+                // Перетаскивание из другого слота
+                if (parsed.from) {
+                    let fromArr = parsed.from === 'front' ? selectedEnemiesFront : selectedEnemiesBack;
+                    let char = fromArr[parsed.index];
+                    if (!selectedEnemiesBack[i]) {
+                        fromArr[parsed.index] = null;
+                        selectedEnemiesBack[i] = char;
+                        renderEnemiesGrids();
+                        updateCharactersList();
+                    }
+                }
+                // Перетаскивание из списка
+                else if (parsed.name) {
+                    if (!selectedEnemiesBack[i]) {
+                        selectedEnemiesBack[i] = { ...parsed };
+                        renderEnemiesGrids();
+                        updateCharactersList();
+                    }
+                }
+            }
+        });
+        backGrid.appendChild(cell);
+    }
+}
