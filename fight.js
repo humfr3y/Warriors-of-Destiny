@@ -421,6 +421,9 @@ function createCharacterDiv(char, type, index, row) {
                 hpBarPreview.style.display = 'none';
                 hpBarPreview.style.background = '';
             }
+            // Скрываем characterInfoPanel
+            const characterInfoPanel = document.getElementById('character-info-panel');
+            if (characterInfoPanel) characterInfoPanel.style.display = 'none';
         };
     }
 
@@ -629,32 +632,33 @@ function enemyAttack(attackerId) {
     const attackerName2 = i18next.t(`${attacker.code}.name`, { defaultValue: attacker.name });
     if (!attacker || attacker.health <= 0) return;
 
+    // Особое поведение для Saint (хилит союзника)
     if (attacker.code === "Saint") {
-        // Приоритет: раненый на переднем фронте → сильно раненый сам → любой раненый союзник → сам
-        let target =
-            selectedEnemiesFront2.filter(e => e && e.health > 0 && e.health < e.maxHealth && e !== attacker)
-                .sort((a, b) => a.health - b.health)[0] ||
-            (attacker.health > 0 && attacker.health < attacker.maxHealth * 0.7 ? attacker : null) ||
-            selectedEnemies.filter(e => e.health > 0 && e.health < e.maxHealth && e !== attacker)
-                .sort((a, b) => a.health - b.health)[0] ||
-            attacker;
-
-        healEnemy(attacker, target);
+        // Находит самого раненого союзника и лечит его
+        const allies = fighters.filter(c => c !== attacker && c.health > 0 && c.damagetype !== "Damage" && c.damagetype !== "Area Damage");
+        if (allies.length > 0) {
+            const minHealth = Math.min(...allies.map(a => a.health / a.maxHealth));
+            const wounded = allies.filter(a => (a.health / a.maxHealth) === minHealth);
+            const target = wounded[Math.floor(Math.random() * wounded.length)];
+            healAlly(attacker, target);
+        }
         playAttackSound(attacker.sound);
         updateDamageDisplay();
-        updateStatsDisplay(target, 'enemy', true);
         return;
     }
-    if (attacker.code === "Godlikesaint") {
-        let shieldTargets = selectedEnemies.filter(e => e.health > 0 && e !== attacker);
-        if (shieldTargets.length === 0) shieldTargets = [attacker];
-        const target = shieldTargets[Math.floor(Math.random() * shieldTargets.length)];
 
-        shieldEnemy(attacker, target);
-        showCustomEffect(target, `+${attacker.damage}% защиты`, '#00c8ff', 'enemy');
+    // Особое поведение для Godlikesaint (баффает союзника)
+    if (attacker.code === "Godlikesaint") {
+        // Находит союзника с наименьшей защитой и баффает его
+        const allies = fighters.filter(c => c !== attacker && c.health > 0);
+        if (allies.length > 0) {
+            const minDef = Math.min(...allies.map(a => a.defense || 0));
+            const weakestDef = allies.filter(a => (a.defense || 0) === minDef);
+            const target = weakestDef[Math.floor(Math.random() * weakestDef.length)];
+            shieldAlly(attacker, target);
+        }
         playAttackSound(attacker.sound);
         updateDamageDisplay();
-        updateStatsDisplay(target, 'enemy', true);
         return;
     }
 
@@ -666,23 +670,81 @@ function enemyAttack(attackerId) {
     );
     if (allowedTargets.length === 0) return;
 
-    // Выбор цели (например, слабейший или приоритетный)
     let defender;
-    let priorityTargets = allowedTargets.filter(ally => ally.damagetype !== "Damage");
-    if (priorityTargets.length > 0 && Math.random() < 0.5) {
-        defender = priorityTargets[Math.floor(Math.random() * priorityTargets.length)];
+
+    // Особый ИИ для Curse Defense и Curse Damage
+    if (attacker.damagetype === "Curse Defense" || attacker.damagetype === "Curse Damage") {
+        // 60% — цель с самой высокой защитой (Curse Defense) или уроном (Curse Damage)
+        if (attacker.damagetype === "Curse Defense" && Math.random() < 0.6) {
+            const maxDef = Math.max(...allowedTargets.map(a => a.defense || 0));
+            const bestDef = allowedTargets.filter(a => (a.defense || 0) === maxDef);
+            defender = bestDef[Math.floor(Math.random() * bestDef.length)];
+        } else if (attacker.damagetype === "Curse Damage" && Math.random() < 0.6) {
+            const maxDmg = Math.max(...allowedTargets.map(a => typeof a.damage === 'function' ? a.damage.call(a) : a.damage || 0));
+            const bestDmg = allowedTargets.filter(a => {
+                const dmg = typeof a.damage === 'function' ? a.damage.call(a) : a.damage || 0;
+                return dmg === maxDmg;
+            });
+            defender = bestDmg[Math.floor(Math.random() * bestDmg.length)];
+        }
+        // 20% — цель с минимальным здоровьем
+        if (!defender && Math.random() < 0.2) {
+            const minHealth = Math.min(...allowedTargets.map(a => a.health));
+            const weakest = allowedTargets.filter(a => a.health === minHealth);
+            defender = weakest[Math.floor(Math.random() * weakest.length)];
+        }
+        // Остальное — случайная цель
+        if (!defender) {
+            defender = allowedTargets[Math.floor(Math.random() * allowedTargets.length)];
+        }
     } else {
-        let minHealth = Math.min(...allowedTargets.map(a => a.health));
-        let weakest = allowedTargets.filter(a => a.health === minHealth);
-        defender = weakest[Math.floor(Math.random() * weakest.length)];
+        // Обычный ИИ с элементом случайности
+        if (Math.random() < 0.5) {
+            // 1. Опасные (урон > 70% от максимального среди всех) — 40%
+            const maxDmg = Math.max(...allowedTargets.map(a => typeof a.damage === 'function' ? a.damage.call(a) : a.damage || 0));
+            const dangerous = allowedTargets.filter(a => {
+                const dmg = typeof a.damage === 'function' ? a.damage.call(a) : a.damage || 0;
+                return dmg >= maxDmg * 0.7;
+            });
+            if (dangerous.length > 0 && Math.random() < 0.4) {
+                defender = dangerous[Math.floor(Math.random() * dangerous.length)];
+            }
+            // 2. Раненые (здоровье < 70%) — 40%
+            if (!defender) {
+                const wounded = allowedTargets.filter(a => a.health < a.maxHealth * 0.7);
+                if (wounded.length > 0 && Math.random() < 0.4) {
+                    defender = wounded[Math.floor(Math.random() * wounded.length)];
+                }
+            }
+            // 3. Хиллеры/бафферы — 30%
+            if (!defender) {
+                const support = allowedTargets.filter(a => ["Heal", "Defense Buff"].includes(a.damagetype));
+                if (support.length > 0 && Math.random() < 0.3) {
+                    defender = support[Math.floor(Math.random() * support.length)];
+                }
+            }
+            // 4. Минимальное здоровье — 30%
+            if (!defender && Math.random() < 0.3) {
+                let minHealth = Math.min(...allowedTargets.map(a => a.health));
+                let weakest = allowedTargets.filter(a => a.health === minHealth);
+                defender = weakest[Math.floor(Math.random() * weakest.length)];
+            }
+            // 5. Случайная цель
+            if (!defender) {
+                defender = allowedTargets[Math.floor(Math.random() * allowedTargets.length)];
+            }
+        } else {
+            // Просто случайная цель
+            defender = allowedTargets[Math.floor(Math.random() * allowedTargets.length)];
+        }
     }
+
     if (!defender) return;
 
     if (attacker.damagetype === "Area Damage") {
         const mainIdx = selectedAllies.findIndex(ally => ally === defender);
         if (mainIdx !== -1) tripleAttack(attacker, selectedAllies, mainIdx, 'hero');
     } else {
-    // Найти индекс и фронт/тыл для defender
         let row = 'front', idx = selectedAlliesFront2.indexOf(defender);
         if (idx === -1) {
             row = 'back';
@@ -693,24 +755,25 @@ function enemyAttack(attackerId) {
     playAttackSound(attacker.sound);
 
     const characterInfoPanel = document.getElementById('character-info-panel');
-        if (!characterInfoPanel) return;
-        characterInfoPanel.style.display = 'flex';
-        characterInfoPanel.innerHTML = `
-            <h3 style="margin-top:0; text-align:center">${attackerName2}</h3>
-            <div><b>${i18next.t('Rarity', { defaultValue: 'Редкость' })}:</b> &nbsp;${i18next.t(`${attacker.code}.rarity`, { defaultValue: attacker.rarity })}</div>
-            <div><b>${i18next.t('Level', { defaultValue: 'Уровень' })}:</b> &nbsp;${attacker.level || 1}</div>
-            <div><b>${i18next.t('Experience', { defaultValue: 'Опыт' })}:</b> &nbsp;${attacker.exp || 0}/${attacker.maxExp || 100}</div>
-            <div><b>${i18next.t('Health', { defaultValue: 'Здоровье' })}:</b> &nbsp;${attacker.maxHealth || attacker.health}</div>
-            <div><b>${i18next.t('Defense', { defaultValue: 'Защита' })}:</b> &nbsp;${attacker.defense || 0}</div>
-            <div><b>${i18next.t('Damage', { defaultValue: 'Урон' })}:</b> &nbsp;${typeof attacker.damage === 'function' ? i18next.t('Special formula', { defaultValue: 'Спец. формула' }) : attacker.damage}</div>
-            <div><b>${i18next.t('Speed', { defaultValue: 'Скорость' })}: </b>&nbsp;${attacker.speed || 0}</div>
-            <div><b>${i18next.t('DamageType', { defaultValue: 'Тип урона' })}:</b> &nbsp;${i18next.t(`${attacker.code}.damagetype`, { defaultValue: attacker.damagetype || '-' })}</div> <br>
-            <div><i>${i18next.t(`${attacker.code}.description`, { defaultValue: attacker.description || '-' })}</i></div> <br> 
-            <div><b>${i18next.t('Ability', { defaultValue: 'Способность' })}:</b> &nbsp;${i18next.t(`${attacker.code}.ability`, { defaultValue: attacker.ability || '-' })}</div>
-        `;
-    
+    if (!characterInfoPanel) return;
+    characterInfoPanel.style.display = 'flex';
+    characterInfoPanel.innerHTML = `
+        <h3 style="margin-top:0; text-align:center">${attackerName2}</h3>
+        <div><b>${i18next.t('Rarity', { defaultValue: 'Редкость' })}:</b> &nbsp;${i18next.t(`${attacker.code}.rarity`, { defaultValue: attacker.rarity })}</div>
+        <div><b>${i18next.t('Level', { defaultValue: 'Уровень' })}:</b> &nbsp;${attacker.level || 1}</div>
+        <div><b>${i18next.t('Experience', { defaultValue: 'Опыт' })}:</b> &nbsp;${attacker.exp || 0}/${attacker.maxExp || 100}</div>
+        <div><b>${i18next.t('Health', { defaultValue: 'Здоровье' })}:</b> &nbsp;${attacker.maxHealth || attacker.health}</div>
+        <div><b>${i18next.t('Defense', { defaultValue: 'Защита' })}:</b> &nbsp;${attacker.defense || 0}</div>
+        <div><b>${i18next.t('Damage', { defaultValue: 'Урон' })}:</b> &nbsp;${typeof attacker.damage === 'function' ? i18next.t('Special formula', { defaultValue: 'Спец. формула' }) : attacker.damage}</div>
+        <div><b>${i18next.t('Speed', { defaultValue: 'Скорость' })}: </b>&nbsp;${attacker.speed || 0}</div>
+        <div><b>${i18next.t('DamageType', { defaultValue: 'Тип урона' })}:</b> &nbsp;${i18next.t(`${attacker.code}.damagetype`, { defaultValue: attacker.damagetype || '-' })}</div> <br>
+        <div><i>${i18next.t(`${attacker.code}.description`, { defaultValue: attacker.description || '-' })}</i></div> <br> 
+        <div><b>${i18next.t('Ability', { defaultValue: 'Способность' })}:</b> &nbsp;${i18next.t(`${attacker.code}.ability`, { defaultValue: attacker.ability || '-' })}</div>
+    `;
+
     updateDamageDisplay();
 }
+
 // --- Одиночная атака ---
 function singleAttack(attacker, defender, type, row, idx) {
     if (typeof attacker.beforeAttack === 'function') {
@@ -1869,11 +1932,13 @@ function giveExpToMaterializedAllies() {
     expSum = Math.ceil(expSum)
     let expForOneChar = expSum / selectedAllies.filter(ally => ally && ally.health > 0).length;
     let materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
+    console.log(materializedCharacters)
     materializedCharacters = materializedCharacters.map(c => ({ ...c, id: String(c.id) }));
     selectedAllies = selectedAllies.map(a => a.isMaterialized && a.materializedId
         ? { ...a, materializedId: String(a.materializedId) }
         : a
     );
+    console.log(materializedCharacters)
     selectedAllies.forEach(ally => {
         if (ally.isMaterialized && ally.materializedId && ally.health > 0) {
             const idx = materializedCharacters.findIndex(
@@ -1888,6 +1953,7 @@ function giveExpToMaterializedAllies() {
             }
         }
     });
+    console.log(materializedCharacters)
     localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
     function getPlayerProfile() {
         return JSON.parse(localStorage.getItem('playerProfile')) || {

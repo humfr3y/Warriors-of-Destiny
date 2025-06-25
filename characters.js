@@ -817,7 +817,6 @@ window.addEventListener('load', function() {
     const isRefreshing = sessionStorage.getItem('isRefreshing');
     if (isRefreshing === 'true') {
         sessionStorage.removeItem('isRefreshing');
-        returnCharactersToInventory2();
         clearSelectedCharacters();
         renderCraftingList();
         loadSavedSquad();
@@ -829,26 +828,7 @@ window.addEventListener('load', function() {
         loadSavedSquad();
     }
 });
-function returnCharactersToInventory2() {
-    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
-    const allies = JSON.parse(localStorage.getItem('selectedAllies')) || [];
-    let materializedCharacters = JSON.parse(localStorage.getItem('materializedCharacters')) || [];
-    allies.forEach(character => {
-        if (character.isMaterialized && character.materializedId) {
-            if (!materializedCharacters.some(c => c.id === character.materializedId)) {
-                materializedCharacters.push(character);
-            }
-        } else {
-            const inventoryItem = inventory.find(item => item.name === character.name && item.rarity === character.rarity);
-            if (inventoryItem) inventoryItem.quantity += 1;
-            else inventory.push({ name: character.name, rarity: character.rarity, quantity: 1, type: 'character' });
-        }
-    });
-    const filteredInventory = inventory.filter(item => item.quantity > 0);
-    localStorage.setItem('materializedCharacters', JSON.stringify(materializedCharacters));
-    localStorage.setItem('inventory', JSON.stringify(filteredInventory));
-    loadInventory();
-}
+
 
 function renderAlliesGrids() {
     const frontGrid = document.getElementById('allies-front-grid');
