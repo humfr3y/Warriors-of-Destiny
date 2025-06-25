@@ -1482,7 +1482,7 @@ function getLevelRewards(level) {
                 rarityWeights: { "Common": 100 },
                 location: "all",
                 quantityChancesConfig: {
-                    "Common": { 0: 20, 1: 79, 2: 1 }
+                    "Common": { 1: 99, 2: 1 }
                 }
             };
         case (level >= 6 && level <= 10):
@@ -1935,6 +1935,8 @@ function checkBattleEnd() {
     const aliveAllies = selectedAllies.filter(Boolean).filter(ally => ally.health > 0);
     if (aliveEnemies.length === 0 && !rewardsGenerated) {
         battleEnded = true;
+        const characterInfoPanel = document.getElementById('character-info-panel');
+        characterInfoPanel.style.display = 'none';
         showBattleResultModal('win')
         if (localStorage.getItem('currentLevel')) {
             const currentLevel = parseInt(localStorage.getItem('currentLevel')) || 1;
@@ -1943,7 +1945,9 @@ function checkBattleEnd() {
             expPlayerMessages = [];
             giveExpToMaterializedAllies();
             const rewardConfig = getLevelRewards(currentLevel);
+            console.log(rewardConfig)
             const rewards = generateDrop(rewardConfig);
+            console.log(rewards)
             const completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
             if (currentLevel % 10 == 0 && !completedLevels.includes(currentLevel)) {
                 rewards.push({ name: "Human Vessel", key: "human_vessel", rarity: "Epic", quantity: 1 })
